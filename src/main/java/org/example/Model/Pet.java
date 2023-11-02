@@ -9,13 +9,19 @@ package org.example.Model;
  *
  * @author direc
  */
+
 public class Pet {
+    public enum Health{
+        HEALTHY,
+        SICK,
+        NA
+    }
     private int id;
     private String animal;
     private int age;
-    private String health;
+    private Health health;
     
-    public Pet(int _id, String _animal, int _age, String _health)
+    public Pet(int _id, String _animal, int _age, Health _health)
     {
         this.id = _id;
         this.animal = _animal;

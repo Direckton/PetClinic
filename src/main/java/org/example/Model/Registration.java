@@ -7,6 +7,7 @@ package org.example.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.example.Model.Pet;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Registration {
         petList = new ArrayList<Pet>();
     }
     
-    public void addNewPet(int id, String animal, int age, String health)
+    public void addNewPet(int id, String animal, int age, Pet.Health health)
     {
         try
         {

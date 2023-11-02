@@ -7,6 +7,8 @@ package org.example.Controller;
 import org.example.Model.*;
 import org.example.View.*;
 
+import java.util.Scanner;
+
 /**
  *
  * @author direc
@@ -14,12 +16,29 @@ import org.example.View.*;
 public class Controller {
      Registration registration = new Registration();
      View view = new View();
+     UserInput input = new UserInput();
 
      public Controller()
      {
-         view.MainMenu();
-        registration.addNewPet(1, "pies", 3, "chory");
-        registration.addNewPet(1, "pies", 3, "chory");
-
+        view.MainMenu();
+        registration.addNewPet(1, "dog", 3, Pet.Health.SICK);
      }
+
+
+}
+
+class UserInput
+{
+    private Scanner input;
+    private String data;
+    public UserInput()
+    {
+        data = "";
+        input = new Scanner(System.in);
+    }
+
+    public String getLine()
+    {
+        return input.nextLine();
+    }
 }
