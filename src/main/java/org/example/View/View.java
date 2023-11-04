@@ -20,8 +20,27 @@ public class View {
         System.out.println("Welcome to pet clinic. \n"
                 + "Main menu:\n"
                 + "1 - Add new pet\n"
-                + "2 - Create new Visit\n"
+                + "2 - Find pet\n"
                 + "3 - Register visit\n"
                 + "4 - Print prescription\n");
+    }
+    public void printHealthOptions()
+    {
+        System.out.println("Health options:\n"
+                + "1 - Healthy\n"
+                + "2 - Sick\n"
+                + "3 - N/A\n");
+    }
+    public void printException(Exception e)
+    {
+        System.out.println(e);
+    }
+    public void printNumericException(NumberFormatException e)
+    {
+        System.out.println(e);
+    }
+    public void printMessage(String s)
+    {
+        System.out.println(s);
     }
 }

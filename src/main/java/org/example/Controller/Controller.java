@@ -7,6 +7,8 @@ package org.example.Controller;
 import org.example.Model.*;
 import org.example.View.*;
 
+import javax.swing.*;
+import java.net.InterfaceAddress;
 import java.util.Scanner;
 
 /**
@@ -20,19 +22,57 @@ public class Controller {
 
      public Controller()
      {
-        view.MainMenu();
-        registration.addNewPet(1, "dog", 3, Pet.Health.SICK);
+         while(true)
+         {
+            view.MainMenu();
+            if(option(select())){
+                break;
+            }
+         }
+
      }
-
-
+     public int select()
+     {
+         int choice = 0;
+         String value ="";
+         try{
+            value = input.getLine();
+            if(!value.isEmpty())
+            {
+                choice = Integer.parseInt(value);
+            }
+         }
+         catch (NumberFormatException e)
+         {
+            view.printNumericException(e);
+         }
+        return choice;
+     }
+     public Boolean option(int select)
+     {
+         switch(select){
+             case 1:
+                 //Add new pet
+                registration.addNewPet(input.getNumber(),input.getLine(),
+                        input.getNumber(),input.getHealth());
+                 break;
+             case 9:
+                 view.printMessage("Exiting...");
+                 return true;
+             default:
+         }
+        return false;
+     }
 }
 
 class UserInput
 {
     private Scanner input;
     private String data;
+    View v;
     public UserInput()
     {
+        v = new View();
         data = "";
         input = new Scanner(System.in);
     }
@@ -40,5 +80,32 @@ class UserInput
     public String getLine()
     {
         return input.nextLine();
+    }
+    public int getNumber()
+    {
+        int number = 0;
+        try{
+            number = Integer.parseInt(input.nextLine());
+        }
+        catch(NumberFormatException e)
+        {
+            v.printNumericException(e);
+        }
+        return number;
+    }
+    public Pet.Health getHealth(){
+        v.printHealthOptions();
+        switch (getNumber()){
+            case 1:
+                return Pet.Health.HEALTHY;
+            case 2:
+                return Pet.Health.SICK;
+            case 3:
+                return Pet.Health.NA;
+            default:
+                v.printMessage("Wrong input, please check options below.");
+                break;
+        }
+        return null;
     }
 }

@@ -5,6 +5,7 @@
 package org.example.Model;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.example.Model.Pet;
@@ -16,19 +17,16 @@ import org.example.Model.Pet;
 public class Registration {
     private HashMap<Pet,ArrayList<Visit>> entry;
     
-    private ArrayList<Pet> petList;
-    
     public Registration()
     {
         entry = new HashMap<Pet,ArrayList<Visit>>();
-        petList = new ArrayList<Pet>();
     }
     
     public void addNewPet(int id, String animal, int age, Pet.Health health)
     {
         try
         {
-            for(Pet p : petList)
+            for(Pet p : entry.keySet())
             {
                 if(p.getId() == id)
                 {
@@ -42,7 +40,11 @@ public class Registration {
         {
             System.out.println(e);
         }
-        petList.add(new Pet(id,animal,age, health));
+        entry.put(new Pet(id,animal,age,health),null);
         
+    }
+    public void addNewRecord(Pet pet, ArrayList<Visit> visits)
+    {
+        entry.put(pet,visits);
     }
 }
