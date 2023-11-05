@@ -14,11 +14,14 @@ public class View {
     {
         
     }
+    public void welcomeMessage()
+    {
+        System.out.println("Welcome to pet clinic.");
+    }
     
     public void MainMenu()
     {
-        System.out.println("Welcome to pet clinic. \n"
-                + "Main menu:\n"
+        System.out.println("Main menu:\n"
                 + "1 - Add new pet\n"
                 + "2 - Find pet\n"
                 + "3 - Register visit\n"

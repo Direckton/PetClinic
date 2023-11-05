@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.example.Model.Pet;
+import org.example.View.View;
 
 /**
  *
@@ -16,32 +17,58 @@ import org.example.Model.Pet;
  */
 public class Registration {
     private HashMap<Pet,ArrayList<Visit>> entry;
+    private View view;
     
     public Registration()
     {
         entry = new HashMap<Pet,ArrayList<Visit>>();
+        view = new View();
     }
     
     public void addNewPet(int id, String animal, int age, Pet.Health health)
     {
         try
         {
-            for(Pet p : entry.keySet())
-            {
-                if(p.getId() == id)
-                {
-                    //id already exist
-                    throw new Exception("Id already exist, select diffrent one");
-                }
+            //Check id
+            if(checkValidId(id)){
+                throw new Exception("Id already exist or is invalid, try again");
             }
-    
+            //Check name
+            if(checkAnimalName(animal)){
+                throw new Exception("Animal must be specified");
+            }
+            entry.put(new Pet(id,animal,age,health),null);
+
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            view.printException(e);
         }
-        entry.put(new Pet(id,animal,age,health),null);
-        
+
+    }
+    public Boolean checkValidId(int id)
+    {
+        if(id == 0)
+        {
+            //invalid input
+            return true;
+        }
+        for(Pet p : entry.keySet())
+        {
+            if(p.getId() == id)
+            {
+                //id already exist
+                return true;
+            }
+        }
+        //all good
+        return false;
+    }
+    public Boolean checkAnimalName(String s){
+        if(s.isEmpty()){
+            return true;
+        }
+        return false;
     }
     public void addNewRecord(Pet pet, ArrayList<Visit> visits)
     {

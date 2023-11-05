@@ -22,6 +22,7 @@ public class Controller {
 
      public Controller()
      {
+         view.welcomeMessage();
          while(true)
          {
             view.MainMenu();
@@ -53,8 +54,14 @@ public class Controller {
          switch(select){
              case 1:
                  //Add new pet
-                registration.addNewPet(input.getNumber(),input.getLine(),
-                        input.getNumber(),input.getHealth());
+                 view.printMessage("Input unique ID");
+                 int id = input.getNumber();
+                 view.printMessage("Input animal name");
+                 String name = input.getLine();
+                 view.printMessage("Input animal age");
+                 int age = input.getNumber();
+                 registration.addNewPet(id,name,
+                        age,input.getHealth());
                  break;
              case 9:
                  view.printMessage("Exiting...");
