@@ -33,11 +33,35 @@ public class Pet {
     {
         return this;
     }
-    
+
     public int getId()
     {
         return this.id;
     }
-    
+    public String getAnimal()
+    {
+        return this.animal;
+    }
+    public void setAnimal(String name)
+    {
+        this.animal = name;
+    }
+    public void setAge(int age)
+    {
+        this.age = age;
+    }
+    public void setHealth(Health h)
+    {
+        this.health = h;
+    }
+    public int getAge()
+    {
+        return this.age;
+    }
+    public Health getHealth()
+    {
+        return this.health;
+    }
+
     
 }

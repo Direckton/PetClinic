@@ -70,8 +70,44 @@ public class Registration {
         }
         return false;
     }
+    public Pet findPet(int id)
+    {
+        for (Pet p : entry.keySet())
+        {
+            if (p.getId() == id)
+            {
+                return p;
+            }
+        }
+        return null;
+    }
     public void addNewRecord(Pet pet, ArrayList<Visit> visits)
     {
         entry.put(pet,visits);
     }
+    public void editPet(String name, Pet pet){
+        for(Pet p : entry.keySet()){
+            if(pet.getId() == p.getId())
+            {
+                p.setAnimal(name);
+            }
+        }
+    }
+    public void editPet(int age, Pet pet){
+        for(Pet p : entry.keySet()){
+            if(pet.getId() == p.getId())
+            {
+                p.setAge(age);
+            }
+        }
+    }
+    public void editPet(Pet.Health health, Pet pet){
+        for(Pet p : entry.keySet()){
+            if(pet.getId() == p.getId())
+            {
+                p.setHealth(health);
+            }
+        }
+    }
+
 }

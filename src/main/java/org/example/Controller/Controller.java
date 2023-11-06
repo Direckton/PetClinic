@@ -16,12 +16,21 @@ import java.util.Scanner;
  * @author direc
  */
 public class Controller {
-     Registration registration = new Registration();
-     View view = new View();
-     UserInput input = new UserInput();
+     Registration registration;
+     View view;
+     UserInput input;
 
      public Controller()
      {
+         //Initialization
+         registration = new Registration();
+         view = new View();
+         input = new UserInput();
+
+         registration.addNewPet(1,"Dog",3,Pet.Health.SICK);
+         registration.addNewPet(2,"Cat",5,Pet.Health.HEALTHY);
+         registration.addNewPet(3,"Turtle",2,Pet.Health.NA);
+
          view.welcomeMessage();
          while(true)
          {
@@ -63,12 +72,67 @@ public class Controller {
                  registration.addNewPet(id,name,
                         age,input.getHealth());
                  break;
+             case 2:
+                 //Find pet by id
+                 FindPet();
+
+                 break;
              case 9:
                  view.printMessage("Exiting...");
                  return true;
              default:
          }
         return false;
+     }
+     public void FindPet()
+     {
+         view.printMessage("Insert id of the pet:");
+        try {
+            Pet p = registration.findPet(input.getNumber());
+            if(p== null)
+            {
+                throw new Exception("The id is incorrect, exiting.");
+            }
+            view.printPet(p);
+            view.petOptions();
+            petOptions(input.getNumber(),p);
+        }
+        catch (Exception e)
+        {
+            view.printException(e);
+        }
+     }
+     public void editPet(int selector, Pet p)
+     {
+        switch (selector)
+        {
+            case 1:
+                view.printMessage("Input new name");
+                registration.editPet(input.getLine(),p);
+                break;
+            case 2:
+                view.printMessage("Input new age");
+                registration.editPet(input.getNumber(),p);
+                break;
+            case 3:
+                view.printMessage("Input health status");
+                registration.editPet(input.getHealth(),p);
+                break;
+            default:
+                return;
+        }
+     }
+     public void petOptions(int selector, Pet p)
+     {
+         switch (selector)
+         {
+             case 1:
+                 view.printMessage("What information do you want to edit?\n" +
+                         "1 - Animal name\n" +
+                         "2 - Age\n" +
+                         "3 - Health status");
+                editPet(input.getNumber(), p);
+         }
      }
 }
 

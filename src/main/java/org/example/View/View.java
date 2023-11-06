@@ -5,6 +5,8 @@
 package org.example.View;
 
 
+import org.example.Model.Pet;
+
 /**
  *
  * @author direc
@@ -45,5 +47,19 @@ public class View {
     public void printMessage(String s)
     {
         System.out.println(s);
+    }
+
+    public void printPet(Pet pet){
+        System.out.println("Id:" + pet.getId() + "  Animal:" +
+                pet.getAnimal() + "  Age:" + pet.getAge() +
+                "  Health status:" + pet.getHealth());
+    }
+
+    public void petOptions()
+    {
+        System.out.println("What do you want to do with selected pet:\n"
+                + "1 - Edit information\n"
+                + "2 - Delete record\n"
+                + "9 - Exit\n");
     }
 }

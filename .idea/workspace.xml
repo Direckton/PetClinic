@@ -7,6 +7,7 @@
     <list default="true" id="d89dee25-70c1-4347-9a66-a8870fa12329" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Model/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Model/Pet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Model/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Model/Registration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/View/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/View/View.java" afterDir="false" />
     </list>
@@ -61,6 +62,17 @@
       <updated>1698955614013</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
