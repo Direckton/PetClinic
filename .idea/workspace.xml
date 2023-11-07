@@ -44,7 +44,7 @@
   <component name="RunManager">
     <configuration name="PetClinic" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="PetClinic" />
+      <module name="PetClinc" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -76,9 +76,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/Controller/Controller.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Model/Registration.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

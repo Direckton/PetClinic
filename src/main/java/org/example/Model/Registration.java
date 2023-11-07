@@ -6,6 +6,7 @@ package org.example.Model;
 
 
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.example.Model.Pet;
@@ -37,7 +38,7 @@ public class Registration {
             if(checkAnimalName(animal)){
                 throw new Exception("Animal must be specified");
             }
-            entry.put(new Pet(id,animal,age,health),null);
+            entry.put(new Pet(id,animal,age,health),new ArrayList<>());
 
         }
         catch(Exception e)
@@ -118,5 +119,10 @@ public class Registration {
             }
         }
     }
-
+    public void registerVisit()
+    {
+        LocalDateTime myDate = LocalDateTime.of(2023,1,1,17,0);
+        var e = entry.get(findPet(2));
+        e.add(new Visit(myDate,30.0f, new ArrayList<Medicine>()));
+    }
 }

@@ -75,7 +75,10 @@ public class Controller {
              case 2:
                  //Find pet by id
                  FindPet();
-
+                 break;
+             case 3:
+                 //Register visit
+                 registration.registerVisit();
                  break;
              case 9:
                  view.printMessage("Exiting...");
@@ -137,9 +140,10 @@ public class Controller {
                  view.printMessage("Are you sure you want to delete record?\n" +
                          "Y - yes   N - No");
                  String s = input.getLine().toUpperCase();
-                 if(s.ig("Y"));
+                 if(s.equalsIgnoreCase("y"))
                  {
                     registration.deleteRecord(p.getId());
+                    return;
                  }
                  view.printMessage("The record was NOT deleted");
                  break;
