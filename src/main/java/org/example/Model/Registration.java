@@ -109,5 +109,14 @@ public class Registration {
             }
         }
     }
+    public void deleteRecord(int id)
+    {
+        for(Pet p : entry.keySet()){
+            if(id == p.getId())
+            {
+                entry.remove(p);
+            }
+        }
+    }
 
 }

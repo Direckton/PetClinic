@@ -126,12 +126,25 @@ public class Controller {
      {
          switch (selector)
          {
-             case 1:
+             case 1: //Edit pet
                  view.printMessage("What information do you want to edit?\n" +
                          "1 - Animal name\n" +
                          "2 - Age\n" +
                          "3 - Health status");
                 editPet(input.getNumber(), p);
+                break;
+             case 2:    //Delete pet and its record
+                 view.printMessage("Are you sure you want to delete record?\n" +
+                         "Y - yes   N - No");
+                 String s = input.getLine().toUpperCase();
+                 if(s.ig("Y"));
+                 {
+                    registration.deleteRecord(p.getId());
+                 }
+                 view.printMessage("The record was NOT deleted");
+                 break;
+             default:
+                 return;
          }
      }
 }
