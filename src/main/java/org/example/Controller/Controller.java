@@ -30,6 +30,10 @@ public class Controller {
          registration.addNewPet(1,"Dog",3,Pet.Health.SICK);
          registration.addNewPet(2,"Cat",5,Pet.Health.HEALTHY);
          registration.addNewPet(3,"Turtle",2,Pet.Health.NA);
+         registration.CreateVisit(LocalDateTime.of(2024,1,1,13,0),2);
+         registration.CreateVisit(LocalDateTime.of(2024,1,2,13,0),2);
+         registration.CreateVisit(LocalDateTime.of(2024,1,3,13,0),2);
+         registration.CreateVisit(LocalDateTime.of(2024,2,1,13,0),2);
 
          view.welcomeMessage();
          while(true)
@@ -77,8 +81,41 @@ public class Controller {
                  FindPet();
                  break;
              case 3:
+                 //Create visit
+                 view.printMessage("Input Pet id");
+                 int petId = input.getNumber();
+                 if(registration.checkValidId(petId))
+                 {
+                    registration.CreateVisit(input.getDate(), petId);
+                 }
+                 else {
+                     view.printMessage("Id is incorrect.");
+                 }
+                 break;
+             case 4:
                  //Register visit
-                 registration.registerVisit(input.getDate());
+                 view.printMessage("Input Pet id");
+                 petId = input.getNumber();
+                 if(registration.checkValidId(petId))
+                 {
+                     var visits = registration.getVisits(petId);
+                     if(visits.isEmpty())
+                     {
+                         view.printMessage("No visits");
+                         break;
+                     }
+                     for(var v : visits)
+                     {
+                         view.printVisit(v);
+                     }
+                     //Choose visit by its id
+                     view.printMessage("Choose Id of the visit:");
+                     input.getNumber();
+
+                 }
+                 else {
+                     view.printMessage("Invalid Id");
+                 }
                  break;
              case 9:
                  view.printMessage("Exiting...");
@@ -86,6 +123,13 @@ public class Controller {
              default:
          }
         return false;
+     }
+
+     public void visitOptions(Visit selector){
+         view.printMessage("What do you want to do with te visit?\n" +
+                 "1 - Animal name\n" +
+                 "2 - Age\n" +
+                 "3 - Health status");
      }
      public void FindPet()
      {

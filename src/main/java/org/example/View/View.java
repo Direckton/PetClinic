@@ -6,6 +6,9 @@ package org.example.View;
 
 
 import org.example.Model.Pet;
+import org.example.Model.Visit;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -26,8 +29,9 @@ public class View {
         System.out.println("Main menu:\n"
                 + "1 - Add new pet\n"
                 + "2 - Find pet\n"
-                + "3 - Register visit\n"
-                + "4 - Print prescription\n");
+                + "3 - Create visit\n"
+                + "4 - Register visit\n"
+                + "5 - Print prescription\n");
     }
     public void printHealthOptions()
     {
@@ -61,5 +65,15 @@ public class View {
                 + "1 - Edit information\n"
                 + "2 - Delete record\n"
                 + "9 - Exit\n");
+    }
+
+    public void printVisit(Visit visit)
+    {
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        var date = visit.getTime();
+        String formattedDate = date.format(myFormatObj);
+        System.out.println("Id:" + visit.getId() + "  Date:" +
+                formattedDate + "  Was held:" + visit.getHeld() +
+                "  Cost:" + visit.getCost());
     }
 }

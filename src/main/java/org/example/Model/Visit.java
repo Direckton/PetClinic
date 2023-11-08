@@ -14,16 +14,40 @@ import java.util.ArrayList;
  * @author direc
  */
 public class Visit {
+    int id;
     private LocalDateTime time;
     private float cost;
+    private Boolean held;
     private ArrayList<Medicine> medicines;
     
-    public Visit(LocalDateTime _time, float _cost, ArrayList<Medicine> _medicine)
+    public Visit(int _id, LocalDateTime _time, float _cost, ArrayList<Medicine> _medicine)
     {
+        this.id = _id;
         this.time = _time;
         this.cost = _cost;
+        this.held = false;
         this.medicines = _medicine;
     }
+
+    public void visitWasHeld()
+    {
+        held = true;
+    }
     
-    
+    public int getId()
+    {
+        return id;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public Boolean getHeld() {
+        return held;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
 }

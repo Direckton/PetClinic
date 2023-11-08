@@ -5,11 +5,10 @@
 package org.example.Model;
 
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.example.Model.Pet;
+
 import org.example.View.View;
 
 /**
@@ -119,10 +118,23 @@ public class Registration {
             }
         }
     }
-    public void registerVisit(LocalDateTime date)
+    public void CreateVisit(LocalDateTime date, int petId)
     {
-        LocalDateTime myDate = LocalDateTime.now();
-        var e = entry.get(findPet(2));
-        e.add(new Visit(myDate,30.0f, new ArrayList<Medicine>()));
+        var e = entry.get(findPet(petId));
+        var visitId = 0;
+        if(e.size() > 0)
+        {
+            visitId = e.get(e.size()-1).getId();
+        }
+        e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
+    }
+
+    public ArrayList<Visit> getVisits(int id)
+    {
+        return entry.get(findPet(id));
+    }
+    public void registerVisit(int id)
+    {
+
     }
 }
