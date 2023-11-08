@@ -119,9 +119,9 @@ public class Registration {
             }
         }
     }
-    public void registerVisit()
+    public void registerVisit(LocalDateTime date)
     {
-        LocalDateTime myDate = LocalDateTime.of(2023,1,1,17,0);
+        LocalDateTime myDate = LocalDateTime.now();
         var e = entry.get(findPet(2));
         e.add(new Visit(myDate,30.0f, new ArrayList<Medicine>()));
     }

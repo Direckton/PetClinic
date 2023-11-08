@@ -7,8 +7,8 @@ package org.example.Controller;
 import org.example.Model.*;
 import org.example.View.*;
 
-import javax.swing.*;
-import java.net.InterfaceAddress;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -78,7 +78,7 @@ public class Controller {
                  break;
              case 3:
                  //Register visit
-                 registration.registerVisit();
+                 registration.registerVisit(input.getDate());
                  break;
              case 9:
                  view.printMessage("Exiting...");
@@ -157,10 +157,10 @@ class UserInput
 {
     private Scanner input;
     private String data;
-    View v;
+    View view;
     public UserInput()
     {
-        v = new View();
+        view = new View();
         data = "";
         input = new Scanner(System.in);
     }
@@ -177,12 +177,12 @@ class UserInput
         }
         catch(NumberFormatException e)
         {
-            v.printNumericException(e);
+            view.printNumericException(e);
         }
         return number;
     }
     public Pet.Health getHealth(){
-        v.printHealthOptions();
+        view.printHealthOptions();
         switch (getNumber()){
             case 1:
                 return Pet.Health.HEALTHY;
@@ -191,8 +191,37 @@ class UserInput
             case 3:
                 return Pet.Health.NA;
             default:
-                v.printMessage("Wrong input, please check options below.");
+                view.printMessage("Wrong input, please check options below.");
                 break;
+        }
+        return null;
+    }
+    public LocalDateTime getDate()
+    {
+        int year, month, day, hour, minute;
+        Boolean correct = false;
+        while (!correct)
+        {
+            view.printMessage("Input year:");
+            year = getNumber();
+            view.printMessage("Input month:");
+            month = getNumber();
+            view.printMessage("Input day:");
+            day = getNumber();
+            view.printMessage("Input hour:");
+            hour = getNumber();
+            view.printMessage("Input minute:");
+            minute = getNumber();
+
+            LocalDateTime date = LocalDateTime.of(year,month,day,hour,minute);
+
+            if(date.isAfter(LocalDateTime.now()))
+            {
+                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                view.printMessage(date.format(myFormatObj));
+                return date;
+            }
+            view.printMessage("The date is incorrect, please insert it again");
         }
         return null;
     }
