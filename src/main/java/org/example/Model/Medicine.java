@@ -19,6 +19,17 @@ public class Medicine {
         this.quantity = _quantity;
         this.frequency = _frequency;
     }
-    
-    
+
+
+    public String getName() {
+        return name;
+    }
+
+    public float getQuantity() {
+        return quantity;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
 }

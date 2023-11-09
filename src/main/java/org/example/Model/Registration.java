@@ -129,12 +129,72 @@ public class Registration {
         e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
     }
 
-    public ArrayList<Visit> getVisits(int id)
+    public ArrayList<Visit> getVisits(int petId)
     {
-        return entry.get(findPet(id));
+        return entry.get(findPet(petId));
     }
-    public void registerVisit(int id)
+    public void registerVisit(int id, ArrayList<Visit> visits)
     {
-
+        for(var v : visits)
+        {
+            if(v.getId() == id)
+            {
+                v.visitWasHeld();
+                return;
+            }
+        }
+    }
+    public void setQuote(int id, ArrayList<Visit> visits, float price)
+    {
+        for(var v : visits)
+        {
+            if(v.getId() == id)
+            {
+                v.setCost(price);
+                return;
+            }
+        }
+    }
+    public void addMedicine(int VisitId, ArrayList<Visit> visits, Medicine m)
+    {
+        for(var v : visits)
+        {
+            if(v.getId() == VisitId)
+            {
+                v.addMedicine(m);
+                return;
+            }
+        }
+    }
+    public void printPrescription(int VisitId, ArrayList<Visit> visits)
+    {
+        for(var v : visits)
+        {
+            if(v.getId() == VisitId)
+            {
+                var medicines = v.getMedicines();
+                if(medicines.isEmpty())
+                {
+                    view.printMessage("No prescribed medicines");
+                    return;
+                }
+                for (var m : medicines)
+                {
+                    view.printMedicine(m);
+                }
+                return;
+            }
+        }
+    }
+    public void checkVisitId(int visitId, ArrayList<Visit> visits) throws Exception
+    {
+        for (var v : visits)
+        {
+            if(visitId == v.getId())
+            {
+                return;
+            }
+        }
+        throw new Exception("Visit with id:" + visitId + " doesn't exist");
     }
 }

@@ -5,6 +5,7 @@
 package org.example.View;
 
 
+import org.example.Model.Medicine;
 import org.example.Model.Pet;
 import org.example.Model.Visit;
 
@@ -30,8 +31,8 @@ public class View {
                 + "1 - Add new pet\n"
                 + "2 - Find pet\n"
                 + "3 - Create visit\n"
-                + "4 - Register visit\n"
-                + "5 - Print prescription\n");
+                + "4 - Search visit\n" +
+                "9 - Exit");
     }
     public void printHealthOptions()
     {
@@ -75,5 +76,12 @@ public class View {
         System.out.println("Id:" + visit.getId() + "  Date:" +
                 formattedDate + "  Was held:" + visit.getHeld() +
                 "  Cost:" + visit.getCost());
+    }
+
+    public void printMedicine(Medicine m)
+    {
+        System.out.println("Medicine name:" + m.getName() +
+                " Quantity:" + m.getQuantity() +
+                " Frequency:" + m.getFrequency());
     }
 }

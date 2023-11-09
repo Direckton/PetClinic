@@ -7,8 +7,10 @@ package org.example.Controller;
 import org.example.Model.*;
 import org.example.View.*;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -30,10 +32,27 @@ public class Controller {
          registration.addNewPet(1,"Dog",3,Pet.Health.SICK);
          registration.addNewPet(2,"Cat",5,Pet.Health.HEALTHY);
          registration.addNewPet(3,"Turtle",2,Pet.Health.NA);
+         registration.CreateVisit(LocalDateTime.of(2024,2,1,13,0),1);
+         registration.CreateVisit(LocalDateTime.of(2024,2,7,13,45),1);
          registration.CreateVisit(LocalDateTime.of(2024,1,1,13,0),2);
          registration.CreateVisit(LocalDateTime.of(2024,1,2,13,0),2);
-         registration.CreateVisit(LocalDateTime.of(2024,1,3,13,0),2);
+         registration.CreateVisit(LocalDateTime.of(2024,1,3,13,5),2);
          registration.CreateVisit(LocalDateTime.of(2024,2,1,13,0),2);
+         registration.CreateVisit(LocalDateTime.of(2024,2,1,13,0),3);
+         registration.CreateVisit(LocalDateTime.of(2024,3,1,14,20),3);
+         registration.CreateVisit(LocalDateTime.of(2024,4,1,15,0),3);
+         registration.addMedicine(1,registration.getVisits(1),new Medicine("Azaporc",20,2));
+         registration.addMedicine(1,registration.getVisits(1),new Medicine("Betamox L.A.",10,1));
+         registration.addMedicine(2,registration.getVisits(1),new Medicine("Betamox L.A.",10,1));
+         registration.addMedicine(1,registration.getVisits(2),new Medicine("Otisur",1,1));
+         registration.addMedicine(2,registration.getVisits(2),new Medicine("Hemosilate vet",15,2));
+         registration.addMedicine(3,registration.getVisits(2),new Medicine("Scanopril Flavour",1,3));
+         registration.addMedicine(4,registration.getVisits(2),new Medicine("Scanopril Flavour",1,3));
+         registration.addMedicine(1,registration.getVisits(3),new Medicine("Azaporc",20,2));
+         registration.addMedicine(1,registration.getVisits(3),new Medicine("Betamox L.A.",10,1));
+         registration.addMedicine(1,registration.getVisits(3),new Medicine("Betamox L.A.",10,1));
+         registration.addMedicine(2,registration.getVisits(3),new Medicine("Otisur",1,1));
+         registration.addMedicine(3,registration.getVisits(3),new Medicine("Hemosilate vet",15,2));
 
          view.welcomeMessage();
          while(true)
@@ -110,7 +129,15 @@ public class Controller {
                      }
                      //Choose visit by its id
                      view.printMessage("Choose Id of the visit:");
-                     input.getNumber();
+                     int visitId = input.getNumber();
+                     try{
+                         registration.checkVisitId(visitId,visits);
+                         visitOptions(visitId, visits);
+                     }
+                     catch (Exception e)
+                     {
+                         view.printException(e);
+                     }
 
                  }
                  else {
@@ -125,11 +152,31 @@ public class Controller {
         return false;
      }
 
-     public void visitOptions(Visit selector){
+     public void visitOptions(int visitId, ArrayList<Visit> visits){
          view.printMessage("What do you want to do with te visit?\n" +
-                 "1 - Animal name\n" +
-                 "2 - Age\n" +
-                 "3 - Health status");
+                 "1 - Register\n" +
+                 "2 - Service quote\n" +
+                 "3 - Prescribe medicine\n" +
+                 "4 - Print prescription");
+         switch (input.getNumber()){
+             case 1:
+                 //Register visit
+                 registration.registerVisit(visitId, visits);
+                 break;
+             case 2:
+                 //Service quote
+                 view.printMessage("Input price:");
+                 registration.setQuote(visitId,visits,input.getPrice());
+                 break;
+             case 3:
+                 registration.addMedicine(visitId,visits,input.getMedicine());
+                 break;
+             case 4:
+                 registration.printPrescription(visitId,visits);
+                 break;
+             default:
+                 break;
+         }
      }
      public void FindPet()
      {
@@ -225,6 +272,18 @@ class UserInput
         }
         return number;
     }
+    public float getPrice()
+    {
+        float number = 0.f;
+        try{
+            number = Float.parseFloat(input.nextLine());
+        }
+        catch(NumberFormatException e)
+        {
+            view.printNumericException(e);
+        }
+        return number;
+    }
     public Pet.Health getHealth(){
         view.printHealthOptions();
         switch (getNumber()){
@@ -257,16 +316,34 @@ class UserInput
             view.printMessage("Input minute:");
             minute = getNumber();
 
-            LocalDateTime date = LocalDateTime.of(year,month,day,hour,minute);
-
-            if(date.isAfter(LocalDateTime.now()))
+            try
             {
-                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-                view.printMessage(date.format(myFormatObj));
-                return date;
+                LocalDateTime date = LocalDateTime.of(year,month,day,hour,minute);
+                if(date.isAfter(LocalDateTime.now()))
+                {
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    view.printMessage(date.format(myFormatObj));
+                    return date;
+                }
+                view.printMessage("The date is incorrect, please insert it again");
+
             }
-            view.printMessage("The date is incorrect, please insert it again");
+            catch (DateTimeException e)
+            {
+                view.printException(e);
+            }
         }
         return null;
+    }
+    public Medicine getMedicine()
+    {
+        view.printMessage("Input medicine name:");
+        String name = getLine();
+        view.printMessage("Input medicine quantity(ml/g/tablets):");
+        float quantity = getPrice();
+        view.printMessage("Input how frequent medicine should be taken");
+        int frequency = getNumber();
+
+        return new Medicine(name,quantity,frequency);
     }
 }

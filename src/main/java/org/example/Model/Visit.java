@@ -6,7 +6,6 @@ package org.example.Model;
 
 
 import java.time.LocalDateTime; // Import the LocalDateTime class
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +41,9 @@ public class Visit {
     public float getCost() {
         return cost;
     }
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
 
     public Boolean getHeld() {
         return held;
@@ -49,5 +51,14 @@ public class Visit {
 
     public LocalDateTime getTime() {
         return time;
+    }
+    public void addMedicine(Medicine m)
+    {
+        medicines.add(m);
+    }
+
+    public ArrayList<Medicine> getMedicines()
+    {
+        return medicines;
     }
 }
