@@ -6,19 +6,35 @@
 package org.example.Model;
 
 /**
- *
+ * Class defining pet with getters and setters
  * @author direc
  */
 
 public class Pet {
+    /**
+     * Enumeration used to describe pet's state of health
+     */
     public enum Health{
         HEALTHY,
         SICK,
         NA
     }
+
+    /**
+     * Unique id of the pet in database used to search it
+     */
     private int id;
+    /**
+     * Name od the animal (i.e. Dog, Cat, Horse)
+     */
     private String animal;
+    /**
+     * Age of the animal in years
+     */
     private int age;
+    /**
+     * Current health state
+     */
     private Health health;
     
     public Pet(int _id, String _animal, int _age, Health _health)
@@ -28,7 +44,11 @@ public class Pet {
         this.age= _age;
         this.health = _health;
     }
-    
+
+    /**
+     * Pet object getter
+     * @return Object of the pet
+     */
     public Pet getPet()
     {
         return this;

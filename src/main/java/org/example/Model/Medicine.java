@@ -5,12 +5,21 @@
 package org.example.Model;
 
 /**
- *
+ * Defines medicine
  * @author direc
  */
 public class Medicine {
+    /**
+     * Name of the medicine
+     */
     private String name;    //medicine name
+    /**
+     * Quantity in ml/g/tablets
+     */
     private float quantity; //in ml or g
+    /**
+     * How frequent the medicine should be administrated
+     */
     private int frequency;  //times a day
 
     public Medicine(String _name, float _quantity, int _frequency)

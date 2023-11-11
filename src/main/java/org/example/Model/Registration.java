@@ -12,11 +12,18 @@ import java.util.HashMap;
 import org.example.View.View;
 
 /**
- *
+ * Class used as a main logic block of the clinic
+ * Implements operations on Pets and Visits
  * @author direc
  */
 public class Registration {
+    /**
+     * Stores all records of pets and its visits
+     */
     private HashMap<Pet,ArrayList<Visit>> entry;
+    /**
+     * Object used to display data in console
+     */
     private View view;
     
     public Registration()
@@ -24,7 +31,14 @@ public class Registration {
         entry = new HashMap<Pet,ArrayList<Visit>>();
         view = new View();
     }
-    
+
+    /**
+     * Performs checks and if everything is alright adds pet to collection
+     * @param id
+     * @param animal Animal name
+     * @param age age in years
+     * @param health Enum health status
+     */
     public void addNewPet(int id, String animal, int age, Pet.Health health)
     {
         try
@@ -46,6 +60,12 @@ public class Registration {
         }
 
     }
+
+    /**
+     * Checks if id is other than 0 and is unique
+     * @param id
+     * @return false if all checks were correct
+     */
     public Boolean checkValidId(int id)
     {
         if(id == 0)
@@ -64,12 +84,23 @@ public class Registration {
         //all good
         return false;
     }
+
+    /**
+     * Checks if animal name is specified
+     * @param s
+     * @return  false if everything is correct
+     */
     public Boolean checkAnimalName(String s){
         if(s.isEmpty()){
             return true;
         }
         return false;
     }
+
+    /**
+     * @param id
+     * @return
+     */
     public Pet findPet(int id)
     {
         for (Pet p : entry.keySet())

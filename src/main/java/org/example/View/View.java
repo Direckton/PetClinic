@@ -16,10 +16,7 @@ import java.time.format.DateTimeFormatter;
  * @author direc
  */
 public class View {
-    public View()
-    {
-        
-    }
+    public View() {}
     public void welcomeMessage()
     {
         System.out.println("Welcome to pet clinic.");
