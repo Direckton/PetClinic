@@ -14,14 +14,28 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
+ *  Controller dictating flow of the program
  * @author direc
  */
 public class Controller {
-     Registration registration;
-     View view;
-     UserInput input;
+    /**
+     * Registration object responsible for logic
+     */
+     private Registration registration;
+    /**
+     * View class responsible for showing information in console window
+     */
+     private View view;
+    /**
+     * UserInput class for getting input from user through console window
+     */
+     private UserInput input;
 
+    /**
+     * Constructor with initialized data, temporary solution until proper database is up
+     * Contains infinite loop for running program
+     * Exiting is achieved upon selecting correct switch from the control panel
+     */
      public Controller()
      {
          //Initialization
@@ -58,29 +72,18 @@ public class Controller {
          while(true)
          {
             view.MainMenu();
-            if(option(select())){
+            if(option(input.getNumber())){
                 break;
             }
          }
 
      }
-     public int select()
-     {
-         int choice = 0;
-         String value ="";
-         try{
-            value = input.getLine();
-            if(!value.isEmpty())
-            {
-                choice = Integer.parseInt(value);
-            }
-         }
-         catch (NumberFormatException e)
-         {
-            view.printNumericException(e);
-         }
-        return choice;
-     }
+
+    /**
+     * Main menu selector panel, calls corresponding methods
+     * @param select Integer selector
+     * @return If true is returned, the main loop will be broken adn program will end
+     */
      public Boolean option(int select)
      {
          switch(select){
@@ -152,6 +155,11 @@ public class Controller {
         return false;
      }
 
+    /**
+     * Visit options menu
+     * @param visitId
+     * @param visits array of visits
+     */
      public void visitOptions(int visitId, ArrayList<Visit> visits){
          view.printMessage("What do you want to do with te visit?\n" +
                  "1 - Register\n" +
@@ -178,6 +186,11 @@ public class Controller {
                  break;
          }
      }
+
+    /**
+     * Methode used to handle finding pet by id for performing actions on its data
+     * ID cannot be changed
+     */
      public void FindPet()
      {
          view.printMessage("Insert id of the pet:");
@@ -196,6 +209,12 @@ public class Controller {
             view.printException(e);
         }
      }
+
+    /**
+     * Methode for editing pets information
+     * @param selector INT switch for choosing action
+     * @param p Pet object to be edited
+     */
      public void editPet(int selector, Pet p)
      {
         switch (selector)
@@ -216,6 +235,12 @@ public class Controller {
                 return;
         }
      }
+
+    /**
+     * Selector for action to be performed on pet object
+     * @param selector INT selector for choosing action
+     * @param p Pet object
+     */
      public void petOptions(int selector, Pet p)
      {
          switch (selector)
@@ -244,11 +269,23 @@ public class Controller {
      }
 }
 
+/**
+ * Class for taking in input form the user through console
+ */
 class UserInput
 {
+    /**
+     * Object for handling input from the console
+     */
     private Scanner input;
+    /**
+     * String of data input
+     */
     private String data;
-    View view;
+    /**
+     * View class for displaying in console
+     */
+    private View view;
     public UserInput()
     {
         view = new View();
@@ -256,10 +293,19 @@ class UserInput
         input = new Scanner(System.in);
     }
 
+    /**
+     * Gets pure string
+     * @return String
+     */
     public String getLine()
     {
         return input.nextLine();
     }
+
+    /**
+     * Converts string to int with necessary checks
+     * @return Integer
+     */
     public int getNumber()
     {
         int number = 0;
@@ -272,6 +318,11 @@ class UserInput
         }
         return number;
     }
+
+    /**
+     * Converts string to float with necessary checks
+     * @return float
+     */
     public float getPrice()
     {
         float number = 0.f;
@@ -284,6 +335,11 @@ class UserInput
         }
         return number;
     }
+
+    /**
+     *  Gets health status from the user as enum type
+     * @return Pet.Health enum or null
+     */
     public Pet.Health getHealth(){
         view.printHealthOptions();
         switch (getNumber()){
@@ -294,11 +350,16 @@ class UserInput
             case 3:
                 return Pet.Health.NA;
             default:
-                view.printMessage("Wrong input, please check options below.");
+                view.printMessage("Wrong input, please check options above.");
                 break;
         }
         return null;
     }
+
+    /**
+     * Gets date from the user
+     * @return LocalDateTime in format dd-MM-yyyy HH:mm or null
+     */
     public LocalDateTime getDate()
     {
         int year, month, day, hour, minute;
@@ -335,6 +396,11 @@ class UserInput
         }
         return null;
     }
+
+    /**
+     * Gets data from user to create Medicine object
+     * @return Medicine object
+     */
     public Medicine getMedicine()
     {
         view.printMessage("Input medicine name:");

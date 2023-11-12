@@ -13,10 +13,25 @@ import java.util.ArrayList;
  * @author direc
  */
 public class Visit {
+    /**
+     * Uniqe id of the Visit object
+     */
     int id;
+    /**
+     * Time of the visit in dd-MM-yyyy HH:mm format
+     */
     private LocalDateTime time;
+    /**
+     * Price of the service, default is 0
+     */
     private float cost;
+    /**
+     * Flag to signal if visit was held
+     */
     private Boolean held;
+    /**
+     * Array of prescribed medicines, takes Medicine type
+     */
     private ArrayList<Medicine> medicines;
     
     public Visit(int _id, LocalDateTime _time, float _cost, ArrayList<Medicine> _medicine)
@@ -28,6 +43,9 @@ public class Visit {
         this.medicines = _medicine;
     }
 
+    /**
+     * Changes held flag to true
+     */
     public void visitWasHeld()
     {
         held = true;
