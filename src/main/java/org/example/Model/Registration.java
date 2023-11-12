@@ -98,8 +98,9 @@ public class Registration {
     }
 
     /**
+     * Returns Pet object by Id parameter
      * @param id
-     * @return
+     * @return Pet object / null if no pet was found
      */
     public Pet findPet(int id)
     {
@@ -112,10 +113,22 @@ public class Registration {
         }
         return null;
     }
+
+    /**
+     * Creates new record in Hashmap
+     * @param pet Pet object
+     * @param visits Array of Visit type
+     */
     public void addNewRecord(Pet pet, ArrayList<Visit> visits)
     {
         entry.put(pet,visits);
     }
+
+    /**
+     * Finds and edits Pet name
+     * @param name new name
+     * @param pet object to be modified
+     */
     public void editPet(String name, Pet pet){
         for(Pet p : entry.keySet()){
             if(pet.getId() == p.getId())
@@ -124,6 +137,12 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Finds and edits Pets age
+     * @param age new age
+     * @param pet object to be modified
+     */
     public void editPet(int age, Pet pet){
         for(Pet p : entry.keySet()){
             if(pet.getId() == p.getId())
@@ -132,6 +151,12 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Finds and edits Pets health status
+     * @param health new status
+     * @param pet object to be modified
+     */
     public void editPet(Pet.Health health, Pet pet){
         for(Pet p : entry.keySet()){
             if(pet.getId() == p.getId())
@@ -140,6 +165,11 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Delete Pet and its Visits by pets id
+     * @param id
+     */
     public void deleteRecord(int id)
     {
         for(Pet p : entry.keySet()){
@@ -149,6 +179,12 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Creates new Visit in array for specified pet by its id
+     * @param date date ov the visit as LocalDateTime obj, must be in the future
+     * @param petId
+     */
     public void CreateVisit(LocalDateTime date, int petId)
     {
         var e = entry.get(findPet(petId));
@@ -160,10 +196,21 @@ public class Registration {
         e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
     }
 
+    /**
+     * Returns all the visits specified pet has been registered to
+     * @param petId
+     * @return Array of Visits
+     */
     public ArrayList<Visit> getVisits(int petId)
     {
         return entry.get(findPet(petId));
     }
+
+    /**
+     * Sets flag to true
+     * @param id Visit id
+     * @param visits Visit array
+     */
     public void registerVisit(int id, ArrayList<Visit> visits)
     {
         for(var v : visits)
@@ -175,6 +222,13 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Sets quote for the service
+     * @param id Visit id
+     * @param visits Visits array
+     * @param price new price
+     */
     public void setQuote(int id, ArrayList<Visit> visits, float price)
     {
         for(var v : visits)
@@ -186,6 +240,13 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Adds new Medicine Object to Medicines array in Visit
+     * @param VisitId
+     * @param visits Visits array
+     * @param m Medicine object
+     */
     public void addMedicine(int VisitId, ArrayList<Visit> visits, Medicine m)
     {
         for(var v : visits)
@@ -197,6 +258,12 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Prints specified visits prescription
+     * @param VisitId
+     * @param visits Visits array
+     */
     public void printPrescription(int VisitId, ArrayList<Visit> visits)
     {
         for(var v : visits)
@@ -217,6 +284,13 @@ public class Registration {
             }
         }
     }
+
+    /**
+     * Checks if visit is exists, if not throws exception
+     * @param visitId
+     * @param visits Visits array
+     * @throws Exception
+     */
     public void checkVisitId(int visitId, ArrayList<Visit> visits) throws Exception
     {
         for (var v : visits)
