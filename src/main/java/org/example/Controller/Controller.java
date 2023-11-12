@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 /**
  *  Controller dictating flow of the program
- * @author direc
+ * @author Michał Buczak
  */
 public class Controller {
     /**

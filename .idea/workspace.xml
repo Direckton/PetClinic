@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d89dee25-70c1-4347-9a66-a8870fa12329" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/RegistrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PetClinic/org/example/Controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PetClinic/org/example/Controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PetClinic/org/example/Controller/UserInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PetClinic/org/example/Controller/UserInput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PetClinic/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PetClinic/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PetClinic/org/example/View/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PetClinic/org/example/View/View.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Model/Medicine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Model/Medicine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Model/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Model/Pet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Model/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Model/Registration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Model/Visit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/View/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/View/View.java" afterDir="false" />
     </list>
@@ -14,6 +26,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -36,13 +55,32 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Michael/Desktop/nauka/Sezon5/Java/Cart&quot;
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/direc/Desktop/nauka/Sezon5/Java/PetClinic_final/Buczak.Michał.ex1.final.zip&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.Model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.All in PetClinic">
     <configuration name="PetClinic" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="PetClinic" />
@@ -50,6 +88,82 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="All in PetClinic" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetClinic" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RegistrationTest.registerVisitTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetClinic" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="RegistrationTest" />
+      <option name="METHOD_NAME" value="registerVisitTest(int)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RegistrationTest.registerVisitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetClinic" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="RegistrationTest" />
+      <option name="METHOD_NAME" value="registerVisitTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VisitTest.addMedicine" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetClinic" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VisitTest" />
+      <option name="METHOD_NAME" value="addMedicine" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VisitTest.visitWasHeld" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetClinic" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VisitTest" />
+      <option name="METHOD_NAME" value="visitWasHeld" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="JUnit" factoryName="JUnit">
+      <module name="PetClinic" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="RegistrationTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.PetClinic" />
+      <item itemvalue="JUnit.test" />
+      <item itemvalue="JUnit.All in PetClinic" />
+      <item itemvalue="JUnit.RegistrationTest.registerVisitTest" />
+      <item itemvalue="JUnit.RegistrationTest.registerVisitTest (1)" />
+      <item itemvalue="JUnit.VisitTest.addMedicine" />
+      <item itemvalue="JUnit.VisitTest.visitWasHeld" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in PetClinic" />
+        <item itemvalue="JUnit.VisitTest.addMedicine" />
+        <item itemvalue="JUnit.VisitTest.visitWasHeld" />
+        <item itemvalue="JUnit.RegistrationTest.registerVisitTest (1)" />
+        <item itemvalue="JUnit.RegistrationTest.registerVisitTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

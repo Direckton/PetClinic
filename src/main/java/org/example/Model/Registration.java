@@ -14,7 +14,7 @@ import org.example.View.View;
 /**
  * Class used as a main logic block of the clinic
  * Implements operations on Pets and Visits
- * @author direc
+ * @author Michał Buczak
  */
 public class Registration {
     /**

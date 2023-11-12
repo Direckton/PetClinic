@@ -7,7 +7,7 @@ package org.example.Model;
 
 /**
  * Class defining pet with getters and setters
- * @author direc
+ * @author Michał Buczak
  */
 
 public class Pet {

@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Class for displaying information in the console window
- * @author direc
+ * @author Michał Buczak
  */
 public class View {
     public View() {}

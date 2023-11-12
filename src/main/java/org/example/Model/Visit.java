@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author direc
+ * @author Michał Buczak
  */
 public class Visit {
     /**

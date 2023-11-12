@@ -6,7 +6,7 @@ package org.example.Model;
 
 /**
  * Defines medicine
- * @author direc
+ * @author Michał Buczak
  */
 public class Medicine {
     /**
