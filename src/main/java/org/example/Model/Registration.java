@@ -20,7 +20,8 @@ public class Registration {
     /**
      * Stores all records of pets and its visits
      */
-    private HashMap<Pet,ArrayList<Visit>> entry;
+    //private HashMap<Pet,ArrayList<Visit>> entry;
+    private ArrayList<Record> data;
     /**
      * Object used to display data in console
      */
@@ -28,7 +29,8 @@ public class Registration {
     
     public Registration()
     {
-        entry = new HashMap<Pet,ArrayList<Visit>>();
+        //entry = new HashMap<Pet,ArrayList<Visit>>();
+        data = new ArrayList<>();
         view = new View();
     }
 
@@ -51,7 +53,8 @@ public class Registration {
             if(checkAnimalName(animal)){
                 throw new Exception("Animal must be specified");
             }
-            entry.put(new Pet(id,animal,age,health),new ArrayList<>());
+            //entry.put(new Pet(id,animal,age,health),new ArrayList<>());
+            data.add(new Record(new Pet(id,animal,age,health),new ArrayList<>()));
 
         }
         catch(Exception e)
@@ -73,9 +76,17 @@ public class Registration {
             //invalid input
             return true;
         }
-        for(Pet p : entry.keySet())
+/*        for(Pet p : entry.keySet())
         {
             if(p.getId() == id)
+            {
+                //id already exist
+                return true;
+            }
+        }*/
+        for(Record r : data)
+        {
+            if(r.getPet().getId() == id)
             {
                 //id already exist
                 return true;
@@ -104,11 +115,19 @@ public class Registration {
      */
     public Pet findPet(int id)
     {
-        for (Pet p : entry.keySet())
+        /*for (Pet p : entry.keySet())
         {
             if (p.getId() == id)
             {
                 return p;
+            }
+        }*/
+        for(Record r : data)
+        {
+            if(r.getPet().getId() == id)
+            {
+                //id already exist
+                return r.getPet();
             }
         }
         return null;
@@ -121,7 +140,8 @@ public class Registration {
      */
     public void addNewRecord(Pet pet, ArrayList<Visit> visits)
     {
-        entry.put(pet,visits);
+//        entry.put(pet,visits);
+        data.add(new Record(pet,visits));
     }
 
     /**
@@ -130,10 +150,16 @@ public class Registration {
      * @param pet object to be modified
      */
     public void editPet(String name, Pet pet){
-        for(Pet p : entry.keySet()){
-            if(pet.getId() == p.getId())
+//        for(Pet p : entry.keySet()){
+//            if(pet.getId() == p.getId())
+//            {
+//                p.setAnimal(name);
+//            }
+//        }
+        for(Record r : data){
+            if(pet.getId() == r.getPet().getId())
             {
-                p.setAnimal(name);
+                r.getPet().setAnimal(name);
             }
         }
     }
@@ -144,10 +170,16 @@ public class Registration {
      * @param pet object to be modified
      */
     public void editPet(int age, Pet pet){
-        for(Pet p : entry.keySet()){
-            if(pet.getId() == p.getId())
+//        for(Pet p : entry.keySet()){
+//            if(pet.getId() == p.getId())
+//            {
+//                p.setAge(age);
+//            }
+//        }
+        for(Record r : data){
+            if(pet.getId() == r.getPet().getId())
             {
-                p.setAge(age);
+                r.getPet().setAge(age);
             }
         }
     }
@@ -158,10 +190,16 @@ public class Registration {
      * @param pet object to be modified
      */
     public void editPet(Pet.Health health, Pet pet){
-        for(Pet p : entry.keySet()){
-            if(pet.getId() == p.getId())
+//        for(Pet p : entry.keySet()){
+//            if(pet.getId() == p.getId())
+//            {
+//                p.setHealth(health);
+//            }
+//        }
+        for(Record r : data){
+            if(pet.getId() == r.getPet().getId())
             {
-                p.setHealth(health);
+                r.getPet().setHealth(health);
             }
         }
     }
@@ -172,10 +210,16 @@ public class Registration {
      */
     public void deleteRecord(int id)
     {
-        for(Pet p : entry.keySet()){
-            if(id == p.getId())
+//        for(Pet p : entry.keySet()){
+//            if(id == p.getId())
+//            {
+//                entry.remove(p);
+//            }
+//        }
+        for(Record r : data){
+            if(id == r.getPet().getId())
             {
-                entry.remove(p);
+                data.remove(r);
             }
         }
     }
@@ -187,13 +231,23 @@ public class Registration {
      */
     public void CreateVisit(LocalDateTime date, int petId)
     {
-        var e = entry.get(findPet(petId));
+//        var e = entry.get(findPet(petId));
+//
+//        e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
+
         var visitId = 0;
-        if(e.size() > 0)
-        {
-            visitId = e.get(e.size()-1).getId();
+        for (Record r : data) {
+            if(r.getPet().getId()==petId)
+            {
+                var e=r.getVists();
+                if(e.size() > 0)
+                {
+                    visitId = e.size();
+                }
+                e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
+                break;
+            }
         }
-        e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
     }
 
     /**
@@ -203,7 +257,15 @@ public class Registration {
      */
     public ArrayList<Visit> getVisits(int petId)
     {
-        return entry.get(findPet(petId));
+        //return entry.get(findPet(petId));
+
+        for (Record r : data) {
+            if(r.getPet().getId() == petId)
+            {
+                return r.getVists();
+            }
+        }
+        return null;
     }
 
     /**
