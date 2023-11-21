@@ -4,6 +4,7 @@
  */
 package com.mycompany.petclinicfxml;
 
+import javafx.util.StringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
@@ -27,9 +28,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.mycompany.petclinicfxml.Model.*;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -44,7 +49,7 @@ public class FindPetController{
     @FXML
     private TableColumn<Pet,String> petName;
     @FXML
-    private TableColumn<Pet,Integer> petAge;
+    private TableColumn<Pet,String> petAge;
     @FXML
     private TableColumn<Pet,Pet.Health> petHealth;
     @FXML
@@ -93,12 +98,10 @@ public class FindPetController{
         //petId = new TableColumn<>("Id");
         petId.setCellValueFactory(new PropertyValueFactory<Pet, Integer>("id"));
         petName.setCellValueFactory(new PropertyValueFactory<Pet, String>("animal"));
-        petAge.setCellValueFactory(new PropertyValueFactory<Pet, Integer>("age"));
+        petAge.setCellValueFactory(new PropertyValueFactory<Pet, String>("age"));
         petHealth.setCellValueFactory(new PropertyValueFactory<Pet, Pet.Health>("health"));
         
         table.setItems(data);
-        
-        
         table.setEditable(true);
         petName.setCellFactory(TextFieldTableCell.forTableColumn());	
 
@@ -108,6 +111,18 @@ public class FindPetController{
                 ((Pet) t.getTableView().getItems().get(t.getTablePosition().getRow())).setAnimal(t.getNewValue());
             }
         });
+        petAge.setCellFactory(TextFieldTableCell.forTableColumn());	
+
+        petAge.setOnEditCommit(new EventHandler<CellEditEvent<Pet, String>>() {
+            @Override
+            public void handle(CellEditEvent<Pet, String> t) {
+                ((Pet) t.getTableView().getItems().get(t.getTablePosition().getRow())).setAge(t.getNewValue());
+            }
+        });
+        
+        petHealth.setCellFactory(ComboBoxTableCell.forTableColumn(new MyEnumStringConverter()));
+        
+            
     }
     
     @FXML
@@ -121,4 +136,19 @@ public class FindPetController{
         
     }
 
+
+}
+
+class MyEnumStringConverter extends StringConverter<Pet.Health> {
+    @Override
+    public String toString(Pet.Health object) {
+        // Convert the enum value to a string for display
+        return object.toString();
+    }
+
+    @Override
+    public Pet.Health fromString(String string) {
+        // Convert the displayed string back to the enum value
+        return Pet.Health.valueOf(string);
+    }
 }

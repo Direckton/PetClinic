@@ -5,6 +5,9 @@
 
 package com.mycompany.petclinicfxml.Model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ObservableValue;
+
 
 /**
  * Class defining pet with getters and setters
@@ -37,6 +40,7 @@ public class Pet {
      * Current health state
      */
     private Health health;
+    
     
     public Pet(int _id, String _animal, int _age, Health _health)
     {
@@ -71,18 +75,25 @@ public class Pet {
     {
         this.age = age;
     }
+    public void setAge(String age)
+    {
+        this.age = Integer.parseInt(age);
+    }
     public void setHealth(Health h)
     {
         this.health = h;
     }
-    public int getAge()
+    public String getAge()
     {
-        return this.age;
+        return String.valueOf(this.age);
     }
     public Health getHealth()
     {
         return this.health;
     }
-
+    public String getStringHealth()
+    {
+        return this.health.name();
+    }
     
 }
