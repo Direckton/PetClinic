@@ -28,13 +28,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.mycompany.petclinicfxml.Model.*;
+import java.util.Comparator;
+import javafx.util.Duration;
+import javafx.animation.PauseTransition;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
+import javafx.util.converter.DefaultStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.animation.PauseTransition;
+
+
 
 /**
  * FXML Controller class
@@ -65,6 +73,10 @@ public class FindPetController{
        
     private final ObservableList<Pet> data;    
     private final Registration registration;
+    @FXML
+    private Button add;
+    @FXML
+    private Button delete;
     
     public FindPetController(Registration registration) {
         this.registration = registration;
@@ -75,10 +87,10 @@ public class FindPetController{
                 while (change.next()) {
                     if (change.wasPermutated()) {
                         for (int i = change.getFrom(); i < change.getTo(); ++i) {
-                            System.out.println("zamiana");
+
                         }
                     } else if (change.wasUpdated()) {
-                        System.out.println("uaktualnienie");
+
                     } else {
                         for (var remitem : change.getRemoved()) {
                             registration.getPetData().remove(remitem);
@@ -92,7 +104,6 @@ public class FindPetController{
         });
     }   
     
-    @FXML
     public void initialize() {
         
         //petId = new TableColumn<>("Id");
@@ -103,6 +114,7 @@ public class FindPetController{
         
         table.setItems(data);
         table.setEditable(true);
+        
         petName.setCellFactory(TextFieldTableCell.forTableColumn());	
 
         petName.setOnEditCommit(new EventHandler<CellEditEvent<Pet, String>>() {
@@ -120,14 +132,53 @@ public class FindPetController{
             }
         });
         
-        petHealth.setCellFactory(ComboBoxTableCell.forTableColumn(new MyEnumStringConverter()));
+        petHealth.setEditable(true);
         
+        petHealth.setCellFactory(ComboBoxTableCell.forTableColumn(Pet.Health.values()));
+
+        
+        petHealth.setOnEditCommit(new EventHandler<CellEditEvent<Pet, Pet.Health>>() {
+            @Override
+            public void handle(CellEditEvent<Pet, Pet.Health> event) {
+                TableView<Pet> table = event.getTableView();
+                Pet pet = table.getItems().get(event.getTablePosition().getRow());
+                pet.setHealth(event.getNewValue());
+            }
+        });
             
     }
     
     @FXML
     private void search(ActionEvent event) {
-            
+        String searchValue = searchParam.getText().trim();
+
+        if (!searchValue.isEmpty()) {
+            // Convert the search input to an integer
+            try {
+                int searchId = Integer.parseInt(searchValue);
+                highlightRowById(searchId);
+            } catch (NumberFormatException e) {
+                // Handle the case where the input is not a valid integer
+                // You can display an error message or take other appropriate actions
+            }
+        }
+    }
+   
+    private void highlightRowById(int id) {
+        TableView<Pet> tableView = table;
+        ObservableList<TableColumn<Pet, ?>> columns = tableView.getColumns();
+
+        for (int i = 0; i < tableView.getItems().size(); i++) {
+            Pet pet = tableView.getItems().get(i);
+
+            if (pet.getId() == id) {
+                // Highlight the row
+                tableView.requestFocus();
+                tableView.getSelectionModel().select(i);
+                tableView.scrollTo(i);
+
+            }
+        }
     }
 
     @FXML
@@ -136,19 +187,18 @@ public class FindPetController{
         
     }
 
-
-}
-
-class MyEnumStringConverter extends StringConverter<Pet.Health> {
-    @Override
-    public String toString(Pet.Health object) {
-        // Convert the enum value to a string for display
-        return object.toString();
+    @FXML
+    private void Add(ActionEvent event) {
+        
+        Comparator<Pet> petComparator = Comparator.comparing(Pet::getId);
+        data.sort(petComparator);
+        data.add(new Pet(data.get(data.size()-1).getId()+1,"",0,Pet.Health.NA));
+    }
+    
+    @FXML
+    private void Delete(ActionEvent event) {
+        int index = table.getSelectionModel().getSelectedIndex();
+        if(index != -1) data.remove(index);
     }
 
-    @Override
-    public Pet.Health fromString(String string) {
-        // Convert the displayed string back to the enum value
-        return Pet.Health.valueOf(string);
-    }
 }

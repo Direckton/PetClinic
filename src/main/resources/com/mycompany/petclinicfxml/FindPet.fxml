@@ -24,5 +24,7 @@
             <TableColumn fx:id="petHealth" prefWidth="132.0" text="Health status" />
         </columns>
       </TableView>
+      <Button fx:id="add" layoutX="45.0" layoutY="361.0" mnemonicParsing="false" onAction="#Add" text="Add" />
+      <Button fx:id="delete" layoutX="120.0" layoutY="361.0" mnemonicParsing="false" onAction="#Delete" text="Delete" />
    </children>
 </AnchorPane>

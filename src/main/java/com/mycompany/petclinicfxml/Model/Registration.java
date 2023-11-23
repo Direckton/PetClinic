@@ -32,7 +32,18 @@ public class Registration {
     {
         //entry = new HashMap<Pet,ArrayList<Visit>>();
         data = new ArrayList<>();
+        data.add(new Entry(new Pet(1,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(2,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(3,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(4,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(5,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
         data.add(new Entry(new Pet(6,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(7,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(8,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(9,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(10,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(11,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+        data.add(new Entry(new Pet(12,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
 
         //view = new View();
     }
