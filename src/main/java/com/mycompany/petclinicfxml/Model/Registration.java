@@ -6,6 +6,7 @@ package com.mycompany.petclinicfxml.Model;
 
 
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,20 +33,37 @@ public class Registration {
     {
         //entry = new HashMap<Pet,ArrayList<Visit>>();
         data = new ArrayList<>();
-        data.add(new Entry(new Pet(1,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(2,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(3,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(4,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(5,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(6,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(7,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(8,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(9,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(10,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(11,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-        data.add(new Entry(new Pet(12,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
-
+        
+        FileLoader file = new FileLoader();
+        try{
+            data = file.readDbToRegistration();
+            
+        }
+        catch(IOException e)
+        {
+            
+        }
+        
+        
+        
+        
+//        data.add(new Entry(new Pet(1,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(2,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(3,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(4,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(5,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(6,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(7,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(8,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(9,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(10,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(11,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
+//        data.add(new Entry(new Pet(12,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
         //view = new View();
+    }
+    
+    public void readDb(ArrayList<Entry> db){
+        data.addAll(db);
     }
     
     public ArrayList<Pet> getPetData(){
@@ -264,7 +282,7 @@ public class Registration {
                 {
                     visitId = e.size();
                 }
-                e.add(new Visit(visitId+1,date,0.0f, new ArrayList<Medicine>()));
+                e.add(new Visit(visitId+1,date,0.0f,false, new ArrayList<Medicine>()));
                 break;
             }
         }

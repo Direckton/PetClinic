@@ -35,12 +35,12 @@ public class Visit {
      */
     private ArrayList<Medicine> medicines;
     
-    public Visit(int _id, LocalDateTime _time, float _cost, ArrayList<Medicine> _medicine)
+    public Visit(int _id, LocalDateTime _time, float _cost, Boolean held, ArrayList<Medicine> _medicine)
     {
         this.id = _id;
         this.time = _time;
         this.cost = _cost;
-        this.held = false;
+        this.held = held;
         this.medicines = _medicine;
     }
 
