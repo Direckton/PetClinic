@@ -9,22 +9,23 @@
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.petclinicfxml.FindPetController">
    <children>
-      <TextField fx:id="searchParam" layoutX="45.0" layoutY="31.0" />
-      <Button fx:id="findBtn" layoutX="205.0" layoutY="31.0" mnemonicParsing="false" onAction="#search" text="Find" />
-      <Button fx:id="back" layoutX="555.0" layoutY="421.0" mnemonicParsing="false" onAction="#goBackToMenu" text="Back">
+      <TextField fx:id="searchParam" layoutX="51.0" layoutY="32.0" />
+      <Button fx:id="findBtn" layoutX="211.0" layoutY="32.0" mnemonicParsing="false" onAction="#search" text="Find" />
+      <Button fx:id="back" layoutX="561.0" layoutY="422.0" mnemonicParsing="false" onAction="#goBackToMenu" text="Back">
          <padding>
             <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
          </padding>
       </Button>
-      <TableView fx:id="table" layoutX="45.0" layoutY="68.0" prefHeight="277.0" prefWidth="510.0">
+      <TableView fx:id="table" layoutX="51.0" layoutY="69.0" prefHeight="277.0" prefWidth="531.0">
         <columns>
           <TableColumn fx:id="petId" prefWidth="38.0" text="ID" />
           <TableColumn fx:id="petName" prefWidth="253.0" text="Animal name" />
             <TableColumn fx:id="petAge" prefWidth="86.0" text="Animal age" />
-            <TableColumn fx:id="petHealth" prefWidth="132.0" text="Health status" />
+            <TableColumn fx:id="petHealth" prefWidth="152.0" text="Health status" />
         </columns>
       </TableView>
-      <Button fx:id="add" layoutX="45.0" layoutY="361.0" mnemonicParsing="false" onAction="#Add" text="Add" />
-      <Button fx:id="delete" layoutX="120.0" layoutY="361.0" mnemonicParsing="false" onAction="#Delete" text="Delete" />
+      <Button fx:id="add" layoutX="51.0" layoutY="362.0" mnemonicParsing="false" onAction="#Add" text="Add" />
+      <Button fx:id="delete" layoutX="126.0" layoutY="362.0" mnemonicParsing="false" onAction="#Delete" text="Delete" />
+      <Button fx:id="visitsBtn" layoutX="493.0" layoutY="362.0" mnemonicParsing="false" onAction="#openVisits" text="Visits" />
    </children>
 </AnchorPane>

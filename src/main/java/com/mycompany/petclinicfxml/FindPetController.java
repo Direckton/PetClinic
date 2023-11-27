@@ -77,6 +77,8 @@ public class FindPetController{
     private Button add;
     @FXML
     private Button delete;
+    @FXML
+    private Button visitsBtn;
     
     public FindPetController(Registration registration) {
         this.registration = registration;
@@ -93,10 +95,11 @@ public class FindPetController{
 
                     } else {
                         for (var remitem : change.getRemoved()) {
-                            registration.getPetData().remove(remitem);
+                            registration.deleteRecord(remitem.getId());
                         }
                         for (var additem : change.getAddedSubList()) {
-                            registration.getPetData().add(additem);
+                            registration.addNewPet(additem);
+                            //registration.getPetData().add(additem);
                         }
                     }
                 }
@@ -180,9 +183,19 @@ public class FindPetController{
             }
         }
     }
+    
+    private int getHighlightedCell() {
+        TableView<Pet> tableView = table;
+        ObservableList<TableColumn<Pet, ?>> columns = tableView.getColumns();
+
+        Pet pet = tableView.getItems().get(tableView.getSelectionModel().getFocusedIndex());
+        return pet.getId();
+    }
+    
 
     @FXML
     private void goBackToMenu(ActionEvent event) throws IOException {
+        registration.saveDB();
         App.setRoot("MainMenu");
         
     }
@@ -199,6 +212,14 @@ public class FindPetController{
     private void Delete(ActionEvent event) {
         int index = table.getSelectionModel().getSelectedIndex();
         if(index != -1) data.remove(index);
+    }
+
+    @FXML
+    private void openVisits(ActionEvent event) throws IOException {
+        
+        App.setPetId(getHighlightedCell());
+        App.setRoot("Visits");
+
     }
 
 }

@@ -122,7 +122,12 @@ public class FileLoader {
                     LocalDateTime date = LocalDateTime.parse(visit[2],formatter);
                     float cost = Float.parseFloat(visit[3]);
                     Boolean held = Boolean.parseBoolean(visit[4]);
-                    list.add(new Visit(visitId,date,cost,held,new ArrayList<Medicine>(medicines.get(new Pair(petId, visitId)))));
+                    var medicinesTmp = new ArrayList<Medicine>();
+                    if(medicines.get(new Pair(petId, visitId))!=null)
+                    {
+                        medicinesTmp = medicines.get(new Pair(petId, visitId)); 
+                    }
+                    list.add(new Visit(visitId,date,cost,held,medicinesTmp));
                     
                 }
                 else{
@@ -208,30 +213,97 @@ public class FileLoader {
         HashMap<Integer,ArrayList<Visit>> visits = readDbToVisit(openFile("visits.csv"));
         for(var p : pets)
         {
-            data.add(new Entry(p,new ArrayList<>(visits.get(p.getId()))));
+            ArrayList<Visit> visitsTmp = new ArrayList<>();
+            if(visits.get(p.getId())!=null)
+            {
+                visitsTmp = visits.get(p.getId()); 
+            }
+
+            data.add(new Entry(p,visitsTmp));
         }
         return data;
     }
+    
+    public void saveToStrings(ArrayList<Entry> data){
+        //Pet - ID, name, age, health
+        ArrayList<ArrayList<String>> pets = new ArrayList<>();
+        ArrayList<ArrayList<String>> visits = new ArrayList<>();
+        ArrayList<ArrayList<String>> medicines = new ArrayList<>();
+        for(var p : data)
+        {
+            ArrayList<String> tmp = new ArrayList<>();
+            tmp.add(String.valueOf(p.getPet().getId()));
+            tmp.add(p.getPet().getAnimal());
+            tmp.add(String.valueOf(p.getPet().getAge()));
+            tmp.add(p.getPet().getStringHealth());
+            pets.add(tmp);
+            
+            for(var v : p.getVists())
+            {
+                ArrayList<String> tmpV = new ArrayList<>();
+                tmpV.add(String.valueOf(p.getPetId()));
+                tmpV.add(String.valueOf(v.getId()));
+                tmpV.add(v.getTime().toString());
+                tmpV.add(String.valueOf(v.getCost()));
+                tmpV.add(String.valueOf(v.getHeld()));
+                visits.add(tmpV);
+                for(var m : v.getMedicines())
+                {
+                    ArrayList<String> tmpM = new ArrayList<>();
+                    tmpM.add(String.valueOf(p.getPetId()));
+                    tmpM.add(String.valueOf(v.getId()));
+                    tmpM.add(m.getName());
+                    tmpM.add(String.valueOf(m.getQuantity()));
+                    tmpM.add(String.valueOf(m.getFrequency()));
+                    medicines.add(tmpM);
+                }
+            }
+        }
+        try
+        {
+            saveToFile(pets,openFile("pets.csv"));
+            
+        }
+        catch (IOException e)
+        {
+            
+        }
 
-    /**
-     * Writes inventory back to file
-     * @param inventory current inventory, edited or not
-     * @param path path of the file
-     */
-//    public void writeInventoryToDb(List<Product> inventory, String path)
-//    {
-//        try {
-//            FileWriter writer = new FileWriter(path);
-//
-//            for (Product i : inventory)
-//            {
-//                writer.write(i.getId() + " " + i.getName() + " " + i.getPrice() + "\n");
-//            }
-//            writer.close();
-//            System.out.println("Successfully wrote to the file.");
-//        } catch (IOException e) {
-//            System.out.println("An error occurred.");
-//            e.printStackTrace();
-//        }
-//    }
+    }
+    
+    public void saveToFile(ArrayList<ArrayList<String>> data, File file)
+    {
+        String output ="";
+        for(var i : data)
+        {
+            //System.out.println(i.size());
+            int commas = 1;
+            for(var j : i)
+            {
+                output += j;
+                commas++;
+                if(i.size() >= commas)
+                {
+                    output += ",";
+                }
+                if(i.size() < commas)
+                {
+                    output += "\n";
+                }
+            
+            }
+        }
+        try {
+        FileWriter writer = new FileWriter(file);
+        writer.write(output);
+
+        writer.close();
+        System.out.println("Successfully wrote to the file.");
+        }
+        catch (IOException e) 
+        {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+        }
+    }
 }

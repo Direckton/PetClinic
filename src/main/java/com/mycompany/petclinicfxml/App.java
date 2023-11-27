@@ -16,6 +16,11 @@ public class App extends Application {
 
     private static Registration registration;
     private static Scene scene;
+    private static int petId = 0;
+    
+    static void setPetId(int id){
+        petId = id;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -49,6 +54,10 @@ public class App extends Application {
             case "FindPet":
             {
                 return new FindPetController(registration);
+            }
+            case "Visits":
+            {
+                return new VisitsController(registration,petId);
             }
             default:
                 return new MainMenuController();

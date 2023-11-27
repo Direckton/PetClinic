@@ -19,7 +19,7 @@ public class Entry {
     public int getPetId() {
         return pet.getId();
     }
-    public ArrayList getVists()
+    public ArrayList<Visit> getVists()
     {
         return visits;
     }

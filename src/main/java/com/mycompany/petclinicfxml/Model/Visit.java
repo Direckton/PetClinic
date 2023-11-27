@@ -52,6 +52,11 @@ public class Visit {
         held = true;
     }
     
+    public void setHeld(Boolean status)
+    {
+        held = status;
+    }
+    
     public int getId()
     {
         return id;
@@ -60,6 +65,11 @@ public class Visit {
     public float getCost() {
         return cost;
     }
+    
+    public String getCostString() {
+        return String.valueOf(cost);
+    }
+    
     public void setCost(float cost) {
         this.cost = cost;
     }
@@ -70,6 +80,13 @@ public class Visit {
 
     public LocalDateTime getTime() {
         return time;
+    }
+    public String getDate() {
+        return time.toString();
+    }
+    public void setDate(String s)
+    {
+        time = LocalDateTime.parse(s);
     }
     public void addMedicine(Medicine m)
     {

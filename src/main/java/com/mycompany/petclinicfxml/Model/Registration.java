@@ -37,16 +37,12 @@ public class Registration {
         FileLoader file = new FileLoader();
         try{
             data = file.readDbToRegistration();
-            
         }
         catch(IOException e)
         {
             
         }
-        
-        
-        
-        
+
 //        data.add(new Entry(new Pet(1,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
 //        data.add(new Entry(new Pet(2,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
 //        data.add(new Entry(new Pet(3,"Cat",2,Pet.Health.HEALTHY),new ArrayList<Visit>()));
@@ -62,8 +58,9 @@ public class Registration {
         //view = new View();
     }
     
-    public void readDb(ArrayList<Entry> db){
-        data.addAll(db);
+    
+    public ArrayList<Entry> getData(){
+        return data;
     }
     
     public ArrayList<Pet> getPetData(){
@@ -100,6 +97,36 @@ public class Registration {
             //view.printException(e);
         }
 
+    }
+    public void addNewPet(Pet pet){
+        data.add(new Entry(pet,new ArrayList<>()));
+    }
+    
+    public void addNewVisit(Visit visit, int petId)
+    {
+        for(var p :data)
+        {
+            if(p.getPetId() == petId)
+            {
+                p.getVists().add(visit);
+            }
+        }
+    }
+    public void deleteVisit(int visitId, int petId)
+    {
+        for(var p :data)
+        {
+            if(p.getPetId() == petId)
+            {
+                for( var v : p.getVists())
+                {
+                    if(v.getId() == visitId)
+                    {
+                        p.getVists().remove(v); 
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -402,4 +429,10 @@ public class Registration {
         }
         throw new Exception("Visit with id:" + visitId + " doesn't exist");
     }
+
+    public void saveDB(){
+        FileLoader file = new FileLoader();
+        file.saveToStrings(data);
+    }
+
 }
