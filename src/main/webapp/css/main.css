@@ -1,0 +1,15 @@
+body {
+    background-color: #141617;
+    color: #FFFFFF;
+}
+
+table, td, th, tr {
+    border-collapse: collapse;
+    border-bottom: 1px whitesmoke solid;
+    border-right: 1px whitesmoke solid;
+    padding: 5px;
+    
+}
+button{
+    margin: 10px;
+}
