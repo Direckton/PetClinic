@@ -63,6 +63,17 @@ public class PetsServlet extends HttpServlet {
                 out.println("<input type=\"submit\" class=\"btn btn-outline-primary\" value=\"Visit\" name=\"forward\">");
                 out.println("</form>");
                 out.println("</td>");
+                out.println("<td>");
+                out.println("<button type=\"button\" id=\"launch-modal\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">");
+                out.println("Modal");
+                out.println("</button>");
+                out.println("</td>");
+                out.println("<td>");
+                out.println("<form method=\"POST\" action=\"/pets\">");
+                out.println("<input type=\"hidden\" name=\"id\" value=\"" + pet.getId() + "\">");
+                out.println("<input type=\"submit\" class=\"btn btn-outline-danger\" value=\"Delete\" name=\"delete\">");
+                out.println("</form>");
+                out.println("</td>");
                 out.println("</tr>");
             }
         }
@@ -104,6 +115,12 @@ public class PetsServlet extends HttpServlet {
             String id = request.getParameter("id");
             getServletContext().getRequestDispatcher("/Visits?arg="+id).forward(request,response);
         }
+        if(request.getParameter("delete")!=null)
+        {
+            String id = request.getParameter("id");
+            registration.deleteRecord(Integer.parseInt(id));
+        }
+        getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
 
     }
 
@@ -117,4 +134,8 @@ public class PetsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp);
+    }
 }

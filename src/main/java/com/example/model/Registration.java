@@ -6,10 +6,9 @@ package com.example.model;
 
 
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 //import org.example.View.View;
 
@@ -23,7 +22,7 @@ public final class Registration {
      * Stores all records of pets and its visits
      */
     //private HashMap<Pet,ArrayList<Visit>> entry;
-    private ArrayList<Entry> data;
+    private CopyOnWriteArrayList<Entry> data;
     /**
      * Object used to display data in console
      */
@@ -42,8 +41,8 @@ public final class Registration {
     public Registration()
     {
         //entry = new HashMap<Pet,ArrayList<Visit>>();
-        data = new ArrayList<>();
-//        
+        data = new CopyOnWriteArrayList<>();
+//
 //        FileLoader file = new FileLoader();
 //        try{
 //            data = file.readDbToRegistration();
@@ -90,7 +89,7 @@ public final class Registration {
     }
     
     
-    public ArrayList<Entry> getData(){
+    public CopyOnWriteArrayList<Entry> getData(){
         return data;
     }
     

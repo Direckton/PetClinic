@@ -49,3 +49,7 @@ function sendPetId(ID) {
   xhttp.open("POST", "pets?searchId="+document.getElementById(searchId).value, true);
   xhttp.send();
 }
+
+$('#exampleModal').on('shown.bs.modal', function () {
+  $('#launch-modal').trigger('focus')
+})
