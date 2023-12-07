@@ -52,37 +52,46 @@
           <h5 class="modal-title" id="exampleModalLabel">Edit Pet</h5>
           <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
         </div>
-        <form class="">
+        <form class="" method="POST" action="${pageContext.request.contextPath}/pets">
             <div class="row g-3 justify-content-md-center modal-body">
                 <div class="col-1">
                   <label for="staticId" class="">#</label>
-                  <input type="text" readonly class="form-control-plaintext" id="staticId" value="1">
+                  <input type="text" readonly class="form-control-plaintext" id="staticId" name="staticId" value="1">
                 </div>
                 <div class="col-auto">
                   <label for="inputAnimal" class="">Animal</label>
-                  <input type="text" class="form-control" id="inputAnimal" value="Cat">
+                  <input type="text" class="form-control" id="inputAnimal" name="inputAnimal" value="Cat">
                 </div>
                 <div class="col-2">
                     <label for="inputAge" class="">Age</label>
-                    <input type="number" class="form-control" id="inputAge" value="1">
+                    <input type="number" class="form-control" id="inputAge" name="inputAge" value="1" min="0">
                 </div> 
                 <div class="col-auto">
                     <label for="inputHealth" class="">Health</label>
-                    <select class="form-select" id="inputHealth" aria-label="Default select example">
-                        <option value="1" selected>Healthy</option>
-                        <option value="2">Sick</option>
-                        <option value="3">N/A</option>
+                    <select class="form-select" id="inputHealth" aria-label="Default select example" name="inputHealth">
+                        <option value="HEALTHY" selected>Healthy</option>
+                        <option value="SICK">Sick</option>
+                        <option value="NA">N/A</option>
                       </select>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <input type="submit" class="btn btn-primary" value="Save changes" name="saveEdit">
             </div>
         </form>
       </div>
     </div>
   </div>
+
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <form action="/pets" method="POST">
+          <input type="submit" name="add" class="btn btn-primary" value="Add">
+        </form>
+      </div>
+    </div>
     
 </div>
 </body>

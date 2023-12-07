@@ -50,6 +50,67 @@ function sendPetId(ID) {
   xhttp.send();
 }
 
-$('#exampleModal').on('shown.bs.modal', function () {
-  $('#launch-modal').trigger('focus')
-})
+// $('#exampleModal').on('shown.bs.modal', function () {
+//   $('#launch-modal').trigger('focus')
+// })
+
+function getPet(petId)
+{
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      let input  = this.responseText.replace('[','');
+      input = input.replace(']','');
+      let data = input.split(", ");
+
+      document.getElementById('staticId').value = data[0];
+      document.getElementById('inputAnimal').value = data[1];
+      document.getElementById('inputAge').value = data[2];
+      document.getElementById('inputHealth').value = data[3];
+
+    }
+  };
+
+  xhttp.open("GET", "pets?editId="+petId, true);
+  xhttp.send();
+}
+
+function getVisit(visitId)
+{
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      let input  = this.responseText.replace('[','');
+      input = input.replace(']','');
+      let data = input.split(", ");
+
+      document.getElementById('staticId').value = data[0];
+      document.getElementById('inputDate').value = data[1];
+      document.getElementById('inputTime').value = data[2];
+      document.getElementById('inputCost').value = data[3];
+
+    }
+  };
+
+  const petId = document.getElementById('petId').value;
+  console.log(petId);
+
+  xhttp.open("GET", "visits?editId="+visitId + "&petId=" + petId, true);
+  xhttp.send();
+}
+
+
+function getVisitTable(tableId){
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      document.getElementById(tableId).innerHTML = this.responseText;
+      document.getElementById('petId').values = id;
+    }};
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const id = urlParams.get('id')
+
+  xhttp.open("GET", "visits?id="+id, true);
+  xhttp.send();
+}

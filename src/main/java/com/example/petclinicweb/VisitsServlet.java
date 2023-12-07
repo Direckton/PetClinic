@@ -6,6 +6,8 @@ package com.example.petclinicweb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import com.example.model.Registration;
  *
  * @author direc
  */
-@WebServlet(name = "VisitsServlet", urlPatterns = {"/Visits"})
+@WebServlet("/visits")
 public class VisitsServlet extends HttpServlet {
 
     private Registration registration;
@@ -104,7 +106,72 @@ public class VisitsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        processRequest(request, response);
+//        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+
+        String id = request.getParameter("id");
+
+        if(id!= null) {
+            PrintWriter out = response.getWriter();
+            for(var visit : registration.getVisits(Integer.parseInt(id)))
+            {
+                out.println("<tr>");
+                out.println("<td scope=\"row\">" + visit.getId() + "</td>");
+                out.println("<td>" + visit.getTime().toLocalDate().toString() + "</td>");
+                out.println("<td>" + visit.getTime().toLocalTime().toString() + "</td>");
+                out.println("<td>" + visit.getCostString() + "</td>");
+                out.println("<td>");
+                out.println("<div class=\"form-check form-switch\">");
+                out.print("<input class=\"form-check-input\" type=\"checkbox\" id=\"flexSwitchCheckChecked\"");
+                if(visit.getHeld())
+                {
+                    out.print("checked");
+                }
+                out.println(">");
+                out.println("</div>");
+                out.println("</td>");
+                out.println("<td>");
+                out.println("<form method=\"POST\" action=\"/visits\">");
+                out.println("<input type=\"hidden\" name=\"id\" value=\"" + visit.getId() + "\">");
+                out.println("<input type=\"submit\" class=\"btn btn-outline-primary\" value=\"Medicines\" name=\"forward\">");
+                out.println("</form>");
+                out.println("</td>");
+                out.println("<td>");
+                out.println("<button type=\"button\" id=\"launch-modal\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" " +
+                        "onclick=\"getVisit(" + visit.getId() + ");\">");
+                out.println("Edit");
+                out.println("</button>");
+                out.println("</td>");
+                out.println("<td>");
+                out.println("<form method=\"POST\" action=\"/visits\">");
+                out.println("<input type=\"hidden\" name=\"id\" value=\"" + visit.getId() + "\">");
+                out.println("<input type=\"submit\" class=\"btn btn-outline-danger\" value=\"Delete\" name=\"delete\">");
+                out.println("</form>");
+                out.println("</td>");
+                out.println("</tr>");
+            }
+        }
+
+        String editId = request.getParameter("editId");
+        String petId = request.getParameter("petId");
+
+        if(editId!=null && petId!=null)
+        {
+            System.out.println(editId);
+            System.out.println(petId);
+//            PrintWriter out = response.getWriter();
+//            var x = registration.getVisits();
+//            for(var p :x)
+//            {
+//                if(p.getId()==Integer.parseInt(editId))
+//                {
+//                    String[] arr = {String.valueOf(p.getId()),p.getAnimal(),p.getAge(),p.getStringHealth()};
+//                    out.write(Arrays.toString(arr));
+//                }
+//            }
+        }
+
+
     }
 
     /**

@@ -6,6 +6,11 @@ package com.example.petclinicweb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.example.model.Entry;
+import com.example.model.Pet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,39 +47,59 @@ public class PetsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String searchId = request.getParameter("searchId");
-        
-        boolean showAll = searchId == null || searchId.length() == 0;
 
-        
-        PrintWriter out = response.getWriter();
-
-        for(var pet : registration.getPetData())
+        if(searchId!=null)
         {
-            if(showAll || String.valueOf(pet.getId()).contains(searchId)
-                    || pet.getAnimal().toLowerCase().contains(searchId.toLowerCase())){
-                out.println("<tr>");
-                out.println("<td scope=\"row\">" + pet.getId() + "</td>");
-                out.println("<td>" + pet.getAnimal()+ "</td>");
-                out.println("<td>" + pet.getAge()+ "</td>");
-                out.println("<td>" + pet.getHealth().toString() + "</td>");
-                out.println("<td>");
-                out.println("<form method=\"GET\" action=\"/Visits\">");
-                out.println("<input type=\"hidden\" name=\"id\" value=\"" + pet.getId() + "\">");
-                out.println("<input type=\"submit\" class=\"btn btn-outline-primary\" value=\"Visit\" name=\"forward\">");
-                out.println("</form>");
-                out.println("</td>");
-                out.println("<td>");
-                out.println("<button type=\"button\" id=\"launch-modal\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">");
-                out.println("Modal");
-                out.println("</button>");
-                out.println("</td>");
-                out.println("<td>");
-                out.println("<form method=\"POST\" action=\"/pets\">");
-                out.println("<input type=\"hidden\" name=\"id\" value=\"" + pet.getId() + "\">");
-                out.println("<input type=\"submit\" class=\"btn btn-outline-danger\" value=\"Delete\" name=\"delete\">");
-                out.println("</form>");
-                out.println("</td>");
-                out.println("</tr>");
+            boolean showAll = searchId.isEmpty();
+
+            PrintWriter out = response.getWriter();
+
+            for(var pet : registration.getPetData())
+            {
+                if(showAll || String.valueOf(pet.getId()).contains(searchId)
+                        || pet.getAnimal().toLowerCase().contains(searchId.toLowerCase())){
+                    out.println("<tr>");
+                    out.println("<td scope=\"row\">" + pet.getId() + "</td>");
+                    out.println("<td>" + pet.getAnimal()+ "</td>");
+                    out.println("<td>" + pet.getAge()+ "</td>");
+                    out.println("<td>" + pet.getHealth().toString() + "</td>");
+                    out.println("<td>");
+//                    out.println("<form method=\"GET\" action=\"/visits\">");
+                    out.println("<form method=\"POST\" action=\"/pets\">");
+                    out.println("<input type=\"hidden\" name=\"id\" value=\"" + pet.getId() + "\">");
+                    out.println("<input type=\"submit\" class=\"btn btn-outline-primary\" value=\"Visit\" name=\"forward\">");
+                    out.println("</form>");
+                    out.println("</td>");
+                    out.println("<td>");
+                    out.println("<button type=\"button\" id=\"launch-modal\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" " +
+                            "onclick=\"getPet(" + pet.getId() + ");\">");
+                    out.println("Edit");
+                    out.println("</button>");
+                    out.println("</td>");
+                    out.println("<td>");
+                    out.println("<form method=\"POST\" action=\"/pets\">");
+                    out.println("<input type=\"hidden\" name=\"id\" value=\"" + pet.getId() + "\">");
+                    out.println("<input type=\"submit\" class=\"btn btn-outline-danger\" value=\"Delete\" name=\"delete\">");
+                    out.println("</form>");
+                    out.println("</td>");
+                    out.println("</tr>");
+                }
+            }
+        }
+
+        String editId = request.getParameter("editId");
+        if(editId!=null)
+        {
+            System.out.println(editId);
+            PrintWriter out = response.getWriter();
+            var x = registration.getPetData();
+            for(var p :x)
+            {
+                if(p.getId()==Integer.parseInt(editId))
+                {
+                    String[] arr = {String.valueOf(p.getId()),p.getAnimal(),p.getAge(),p.getStringHealth()};
+                    out.write(Arrays.toString(arr));
+                }
             }
         }
 
@@ -113,14 +138,42 @@ public class PetsServlet extends HttpServlet {
         if(request.getParameter("forward")!=null)
         {
             String id = request.getParameter("id");
-            getServletContext().getRequestDispatcher("/Visits?arg="+id).forward(request,response);
+//            getServletContext().getRequestDispatcher("/Visits?arg="+id).forward(request,response);
+            response.sendRedirect("/visit.jsp?id="+id);
         }
         if(request.getParameter("delete")!=null)
         {
             String id = request.getParameter("id");
             registration.deleteRecord(Integer.parseInt(id));
+            getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
         }
-        getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
+        if(request.getParameter("saveEdit")!=null)
+        {
+            String id = request.getParameter("staticId");
+            String animalName = request.getParameter("inputAnimal");
+            String age = request.getParameter("inputAge");
+            String health = request.getParameter("inputHealth");
+            System.out.println(health);
+            if(id!=null && animalName!=null && age!= null && health!=null) {
+                var pet = registration.findPet(Integer.parseInt(id));
+                registration.editPet(animalName, pet);
+                registration.editPet(Integer.parseInt(age), pet);
+                registration.editPet(Pet.Health.valueOf(health), pet);
+            }
+            getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
+
+        }
+        if(request.getParameter("add")!=null)
+        {
+            int id = 1;
+            while(registration.checkValidId(id)) //true==id exists
+            {
+                id++;
+            }
+            registration.addNewRecord(new Pet(id, "Animal Name",0, Pet.Health.NA),new ArrayList<>());
+            getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
+
+        }
 
     }
 
