@@ -6,8 +6,12 @@ package com.example.petclinicweb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.example.model.Pet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -122,7 +126,7 @@ public class VisitsServlet extends HttpServlet {
                 out.println("<td>" + visit.getCostString() + "</td>");
                 out.println("<td>");
                 out.println("<div class=\"form-check form-switch\">");
-                out.print("<input class=\"form-check-input\" type=\"checkbox\" id=\"flexSwitchCheckChecked\"");
+                out.print("<input class=\"form-check-input\" type=\"checkbox\" id=\"flexSwitchCheckChecked\" onclick=\"handleCheckbox(this," + visit.getId()+ "," + id + ");\"");
                 if(visit.getHeld())
                 {
                     out.print("checked");
@@ -144,7 +148,8 @@ public class VisitsServlet extends HttpServlet {
                 out.println("</td>");
                 out.println("<td>");
                 out.println("<form method=\"POST\" action=\"/visits\">");
-                out.println("<input type=\"hidden\" name=\"id\" value=\"" + visit.getId() + "\">");
+                out.println("<input type=\"hidden\" name=\"visitId\" value=\"" + visit.getId() + "\">");
+                out.println("<input type=\"hidden\" name=\"petId\" value=\"" + id + "\">");
                 out.println("<input type=\"submit\" class=\"btn btn-outline-danger\" value=\"Delete\" name=\"delete\">");
                 out.println("</form>");
                 out.println("</td>");
@@ -159,16 +164,16 @@ public class VisitsServlet extends HttpServlet {
         {
             System.out.println(editId);
             System.out.println(petId);
-//            PrintWriter out = response.getWriter();
-//            var x = registration.getVisits();
-//            for(var p :x)
-//            {
-//                if(p.getId()==Integer.parseInt(editId))
-//                {
-//                    String[] arr = {String.valueOf(p.getId()),p.getAnimal(),p.getAge(),p.getStringHealth()};
-//                    out.write(Arrays.toString(arr));
-//                }
-//            }
+            PrintWriter out = response.getWriter();
+            var x = registration.getVisits(Integer.parseInt(petId));
+            for(var v :x)
+            {
+                if(v.getId()==Integer.parseInt(editId))
+                {
+                    String[] arr = {String.valueOf(v.getId()),v.getTime().toLocalDate().toString(),v.getTime().toLocalTime().toString(),v.getCostString()};
+                    out.write(Arrays.toString(arr));
+                }
+            }
         }
 
 
@@ -185,7 +190,80 @@ public class VisitsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        System.out.println("POST in visits");
+        if(request.getParameter("checkbox")!=null &&
+        request.getParameter("visitId")!=null &&
+        request.getParameter("petId")!=null)
+        {
+            boolean held = Boolean.parseBoolean(request.getParameter("checkbox"));
+            int petId = Integer.parseInt(request.getParameter("petId"));
+            int visitId = Integer.parseInt(request.getParameter("visitId"));
+            var visits = registration.getVisits(petId);
+            for(var v : visits)
+            {
+                if(v.getId() == visitId)
+                {
+                    v.setHeld(held);
+                    break;
+                }
+            }
+        }
+
+        if(request.getParameter("saveEdit")!=null &&
+                request.getParameter("petId")!=null&&
+                request.getParameter("staticId")!=null)
+        {
+            int petId = Integer.parseInt(request.getParameter("petId"));
+            int visitId = Integer.parseInt(request.getParameter("staticId"));
+            var visits = registration.getVisits(petId);
+            for(var v : visits)
+            {
+                if(v.getId() == visitId)
+                {
+                    String date = request.getParameter("inputDate");
+                    String time = request.getParameter("inputTime");
+                    String cost = request.getParameter("inputCost");
+                    if(date != null && time != null && cost != null)
+                    {
+                        v.setDate(date+"T"+time);
+                        v.setCost(Float.parseFloat(cost));
+                    }
+
+                }
+            }
+            response.sendRedirect("/visit.jsp?id="+petId);
+
+        }
+
+
+        if(request.getParameter("delete") != null)
+        {
+            String petId = request.getParameter("petId");
+            String visitId = request.getParameter("visitId");
+            var visits = registration.getVisits(Integer.parseInt(petId));
+            for(var v : visits)
+            {
+                if(v.getId() == Integer.parseInt(visitId))
+                {
+                    visits.remove(v);
+                    break;
+                }
+            }
+            response.sendRedirect("/visit.jsp?id="+petId);
+
+        }
+
+        if(request.getParameter("add")!=null &&
+        request.getParameter("petId")!=null)
+        {
+            int petId =Integer.parseInt(request.getParameter("petId"));
+            var visits = registration.getVisits(petId);
+            registration.CreateVisit(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),petId);
+            response.sendRedirect("/visit.jsp?id="+petId);
+
+
+        }
     }
 
     /**

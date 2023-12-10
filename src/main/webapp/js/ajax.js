@@ -78,6 +78,11 @@ function getPet(petId)
 function getVisit(visitId)
 {
   let xhttp = new XMLHttpRequest();
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  let petId = urlParams.get('id');
+  document.getElementById('petId').value = petId;
   xhttp.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       let input  = this.responseText.replace('[','');
@@ -88,11 +93,9 @@ function getVisit(visitId)
       document.getElementById('inputDate').value = data[1];
       document.getElementById('inputTime').value = data[2];
       document.getElementById('inputCost').value = data[3];
-
     }
   };
 
-  const petId = document.getElementById('petId').value;
   console.log(petId);
 
   xhttp.open("GET", "visits?editId="+visitId + "&petId=" + petId, true);
@@ -105,12 +108,43 @@ function getVisitTable(tableId){
   xhttp.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       document.getElementById(tableId).innerHTML = this.responseText;
-      document.getElementById('petId').values = id;
+      document.getElementById('petId').value = id;
     }};
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const id = urlParams.get('id')
+  const id = urlParams.get('id');
+
 
   xhttp.open("GET", "visits?id="+id, true);
   xhttp.send();
+}
+
+function handleCheckbox(checkbox, visitId, petId){
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+    }};
+
+  console.log(checkbox.checked);
+  xhttp.open("POST", "/visits", true);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.send("checkbox=" + checkbox.checked + "&visitId=" + visitId + "&petId=" + petId);
+}
+
+function addVisit()
+{
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      location.reload();
+    }};
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const id = urlParams.get('id');
+
+  xhttp.open("POST", "/visits", true);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  xhttp.send("add&petId=" + id);
+
 }

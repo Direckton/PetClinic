@@ -135,6 +135,7 @@ public class PetsServlet extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("post request was called");
         //processRequest(request, response);
+
         if(request.getParameter("forward")!=null)
         {
             String id = request.getParameter("id");
