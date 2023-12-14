@@ -39,6 +39,13 @@ public class PetsServlet extends HttpServlet {
     public void init() {
         registration = registration.getInstance();
         db = db.getInstance();
+        
+         var tmpPets = db.getPetData();
+        
+        for(var p : tmpPets)
+        {
+            registration.addNewPet(p);
+        }
       //  super.init();
     }
     /**
@@ -54,33 +61,7 @@ public class PetsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int id;
-        String animal;
-        int age;
-        Pet.Health health;
-        
-        try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/lab", "app", "app")) {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM pet");
-            // Przeglądamy otrzymane wyniki
-            System.out.printf("|%-3s|%-12s|%-10s|%-5s|\n", "ID", "animal", "age", "health");
-            System.out.println("-----------------------------------");
-            while (rs.next()) {
-                System.out.printf("|%-3s", rs.getInt("id"));
-                id = rs.getInt("id");
-                System.out.printf("|%-12s", rs.getString("animal"));
-                animal = rs.getString("animal");
-                System.out.printf("|%-10s", rs.getInt("age"));
-                age = rs.getInt("age");
-                System.out.printf("| %-4s|\n", rs.getString("health"));
-                health =  Pet.Health.valueOf(rs.getString("health"));
-                registration.addNewPet(id, animal, age, health);
-            }
-            System.out.println("-----------------------------------");
-            rs.close();
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        }
+       
         
         String searchId = request.getParameter("searchId");
 

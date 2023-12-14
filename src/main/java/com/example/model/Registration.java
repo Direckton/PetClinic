@@ -324,7 +324,7 @@ public final class Registration {
      * @param date date ov the visit as LocalDateTime obj, must be in the future
      * @param petId
      */
-    public void CreateVisit(LocalDateTime date, int petId)
+    public int CreateVisit(LocalDateTime date, int petId)
     {
 //        var e = entry.get(findPet(petId));
 //
@@ -339,10 +339,12 @@ public final class Registration {
                 {
                     visitId = e.size();
                 }
-                e.add(new Visit(visitId+1,date,0.0f,false, new ArrayList<Medicine>()));
+                visitId++;
+                e.add(new Visit(visitId,date,0.0f,false, new ArrayList<Medicine>()));
                 break;
             }
         }
+        return visitId;
     }
     public void CreateVisit(LocalDateTime date, int petId, Boolean held)
     {

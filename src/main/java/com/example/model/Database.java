@@ -5,6 +5,9 @@
 package com.example.model;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 /**
@@ -63,10 +66,10 @@ public class Database {
         try {
             Statement statement = con.createStatement();
             statement.executeUpdate("CREATE TABLE Visit "
-                    + "(id INTEGER, date_ DATE, "
+                    + "(id INTEGER NOT NULL, date_ DATE, "
                     + "time_ TIME, cost FLOAT,"
+                    + "held BOOLEAN,"
                     + "petId INTEGER,"
-                    + "PRIMARY KEY(id),"
                     + "FOREIGN KEY (petId) REFERENCES Pet(id)"
                     + ")");
             System.out.println("Table created");
@@ -117,4 +120,53 @@ public class Database {
         }
     }
     
+    public ArrayList<Pet> getPetData()
+    {
+        ArrayList<Pet> pets = new ArrayList<>();
+        try{
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM pet");
+            // Przeglądamy otrzymane wyniki
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String animal = rs.getString("animal");
+                int age = rs.getInt("age");
+                Pet.Health health =  Pet.Health.valueOf(rs.getString("health"));
+                pets.add(new Pet(id,animal,age,health));
+            }
+            rs.close();
+            return pets;
+        }catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+        return null;
+    }
+    
+    public ArrayList<Visit> getVisitData(Registration reg)
+    {
+        ArrayList<Visit> visits = new ArrayList<>();
+        try{
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM visit");
+            // Przeglądamy otrzymane wyniki
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                Date date = rs.getDate("date_");
+                Time time = rs.getTime("time_");
+                LocalDateTime dateTime =  LocalDateTime.of(date.toLocalDate(),time.toLocalTime());
+                float cost = rs.getFloat("cost");
+                boolean held = rs.getBoolean("held");
+                int petId = rs.getInt("petId");
+                Visit visit = new Visit(id,dateTime, cost, held, new ArrayList<Medicine>());
+                reg.addNewVisit(visit, petId);
+            }
+            rs.close();
+            return visits;
+        }catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+        return null;
+    }
+    
 }
+

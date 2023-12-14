@@ -4,6 +4,7 @@
  */
 package com.example.petclinicweb;
 
+import com.example.model.Database;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -32,6 +33,8 @@ import java.sql.Statement;
 public class VisitsServlet extends HttpServlet {
 
     private Registration registration;
+    
+    private Database db;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,6 +47,8 @@ public class VisitsServlet extends HttpServlet {
         @Override
     public void init() {
                 registration = registration.getInstance();
+                db = db.getInstance();
+                db.getVisitData(registration);
             }
 
     
@@ -117,27 +122,6 @@ public class VisitsServlet extends HttpServlet {
 
 //        processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
-        
-        try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/lab", "app", "app")) {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Dane");
-            // Przeglądamy otrzymane wyniki
-            System.out.printf("|%-3s|%-12s|%-10s|%-5s|\n", "ID", "Nazwisko", "Imię", "Ocena");
-            System.out.println("-----------------------------------");
-            while (rs.next()) {
-                System.out.printf("|%-3s", rs.getInt("id"));
-                System.out.printf("|%-12s", rs.getString("nazwisko"));
-                System.out.printf("|%-10s", rs.getString("imie"));
-                System.out.printf("| %-4s|\n", rs.getFloat("ocena"));
-            }
-            System.out.println("-----------------------------------");
-            rs.close();
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        }
-        
-        
-        
 
         String id = request.getParameter("id");
 
@@ -234,6 +218,10 @@ public class VisitsServlet extends HttpServlet {
                     break;
                 }
             }
+            db.query("UPDATE Visit SET held = " + held + "\n"
+                    + "WHERE id = " + visitId + " AND "
+                    + "petId = " + petId);
+
         }
 
         if(request.getParameter("saveEdit")!=null &&
@@ -243,6 +231,7 @@ public class VisitsServlet extends HttpServlet {
             int petId = Integer.parseInt(request.getParameter("petId"));
             int visitId = Integer.parseInt(request.getParameter("staticId"));
             var visits = registration.getVisits(petId);
+
             for(var v : visits)
             {
                 if(v.getId() == visitId)
@@ -254,10 +243,18 @@ public class VisitsServlet extends HttpServlet {
                     {
                         v.setDate(date+"T"+time);
                         v.setCost(Float.parseFloat(cost));
+                    db.query("UPDATE Visit SET date_ = '" + date
+                            + "', time_ = '" + time
+                            + "', cost = " + cost
+                            + "\n"
+                            + "WHERE id = " + visitId + " AND "
+                            + "petId = " + petId);
+                        
                     }
 
                 }
             }
+            
             response.sendRedirect("/visit.jsp?id="+petId);
 
         }
@@ -276,6 +273,9 @@ public class VisitsServlet extends HttpServlet {
                     break;
                 }
             }
+            db.query("DELETE FROM Visit WHERE id = " + visitId 
+            + " AND petId = " + petId);
+
             response.sendRedirect("/visit.jsp?id="+petId);
 
         }
@@ -285,7 +285,11 @@ public class VisitsServlet extends HttpServlet {
         {
             int petId =Integer.parseInt(request.getParameter("petId"));
             var visits = registration.getVisits(petId);
-            registration.CreateVisit(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),petId);
+            int visitId = registration.CreateVisit(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),petId);
+            db.insertData("Visit", new String(visitId + ",'"+ LocalDateTime.now().toLocalDate().toString() + "','"
+                    + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toLocalTime().toString() +"',"
+                    + "0,false," + petId));
+
             response.sendRedirect("/visit.jsp?id="+petId);
 
 
