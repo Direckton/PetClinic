@@ -18,6 +18,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.example.model.Registration;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -112,6 +117,27 @@ public class VisitsServlet extends HttpServlet {
 
 //        processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
+        
+        try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/lab", "app", "app")) {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Dane");
+            // Przeglądamy otrzymane wyniki
+            System.out.printf("|%-3s|%-12s|%-10s|%-5s|\n", "ID", "Nazwisko", "Imię", "Ocena");
+            System.out.println("-----------------------------------");
+            while (rs.next()) {
+                System.out.printf("|%-3s", rs.getInt("id"));
+                System.out.printf("|%-12s", rs.getString("nazwisko"));
+                System.out.printf("|%-10s", rs.getString("imie"));
+                System.out.printf("| %-4s|\n", rs.getFloat("ocena"));
+            }
+            System.out.println("-----------------------------------");
+            rs.close();
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+        
+        
+        
 
         String id = request.getParameter("id");
 

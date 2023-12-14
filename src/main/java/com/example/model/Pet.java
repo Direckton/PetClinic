@@ -14,6 +14,7 @@ package com.example.model;
  */
 
 public class Pet {
+
     /**
      * Enumeration used to describe pet's state of health
      */
@@ -82,9 +83,13 @@ public class Pet {
     {
         this.health = h;
     }
-    public String getAge()
+    public String getAgeString()
     {
         return String.valueOf(this.age);
+    }
+    public int getAge()
+    {
+        return this.age;
     }
     public Health getHealth()
     {

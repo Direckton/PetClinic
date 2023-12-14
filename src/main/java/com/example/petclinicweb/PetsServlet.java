@@ -4,6 +4,7 @@
  */
 package com.example.petclinicweb;
 
+import com.example.model.Database;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.example.model.Registration;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 /**
@@ -27,10 +33,12 @@ import com.example.model.Registration;
 public class PetsServlet extends HttpServlet {
 
     private Registration registration;
+    private Database db;
     
     @Override
     public void init() {
         registration = registration.getInstance();
+        db = db.getInstance();
       //  super.init();
     }
     /**
@@ -45,6 +53,34 @@ public class PetsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        int id;
+        String animal;
+        int age;
+        Pet.Health health;
+        
+        try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/lab", "app", "app")) {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM pet");
+            // Przeglądamy otrzymane wyniki
+            System.out.printf("|%-3s|%-12s|%-10s|%-5s|\n", "ID", "animal", "age", "health");
+            System.out.println("-----------------------------------");
+            while (rs.next()) {
+                System.out.printf("|%-3s", rs.getInt("id"));
+                id = rs.getInt("id");
+                System.out.printf("|%-12s", rs.getString("animal"));
+                animal = rs.getString("animal");
+                System.out.printf("|%-10s", rs.getInt("age"));
+                age = rs.getInt("age");
+                System.out.printf("| %-4s|\n", rs.getString("health"));
+                health =  Pet.Health.valueOf(rs.getString("health"));
+                registration.addNewPet(id, animal, age, health);
+            }
+            System.out.println("-----------------------------------");
+            rs.close();
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
         
         String searchId = request.getParameter("searchId");
 
@@ -61,7 +97,7 @@ public class PetsServlet extends HttpServlet {
                     out.println("<tr>");
                     out.println("<td scope=\"row\">" + pet.getId() + "</td>");
                     out.println("<td>" + pet.getAnimal()+ "</td>");
-                    out.println("<td>" + pet.getAge()+ "</td>");
+                    out.println("<td>" + pet.getAgeString()+ "</td>");
                     out.println("<td>" + pet.getHealth().toString() + "</td>");
                     out.println("<td>");
 //                    out.println("<form method=\"GET\" action=\"/visits\">");
@@ -97,7 +133,7 @@ public class PetsServlet extends HttpServlet {
             {
                 if(p.getId()==Integer.parseInt(editId))
                 {
-                    String[] arr = {String.valueOf(p.getId()),p.getAnimal(),p.getAge(),p.getStringHealth()};
+                    String[] arr = {String.valueOf(p.getId()),p.getAnimal(),p.getAgeString(),p.getStringHealth()};
                     out.write(Arrays.toString(arr));
                 }
             }
@@ -146,6 +182,7 @@ public class PetsServlet extends HttpServlet {
         {
             String id = request.getParameter("id");
             registration.deleteRecord(Integer.parseInt(id));
+            db.query("DELETE FROM Pet WHERE id = " + id);
             getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
         }
         if(request.getParameter("saveEdit")!=null)
@@ -160,6 +197,12 @@ public class PetsServlet extends HttpServlet {
                 registration.editPet(animalName, pet);
                 registration.editPet(Integer.parseInt(age), pet);
                 registration.editPet(Pet.Health.valueOf(health), pet);
+                pet = registration.findPet(Integer.parseInt(id));
+                
+                db.query("UPDATE Pet SET animal = '" + pet.getAnimal()
+                + "', age = " + pet.getAge() + ", health = '" + pet.getStringHealth()
+                 + "'\n WHERE  id = " + pet.getId());
+                
             }
             getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
 
@@ -171,7 +214,9 @@ public class PetsServlet extends HttpServlet {
             {
                 id++;
             }
-            registration.addNewRecord(new Pet(id, "Animal Name",0, Pet.Health.NA),new ArrayList<>());
+            Pet pet = new Pet(id, "Animal Name",0, Pet.Health.NA);
+            registration.addNewRecord(pet,new ArrayList<>());
+            db.insertData("Pet", new String(pet.getId()+",'"+ pet.getAnimal()+"',"+pet.getAgeString()+",'"+pet.getStringHealth()+"'"));
             getServletContext().getRequestDispatcher("/pet.jsp").forward(request,response);
 
         }
