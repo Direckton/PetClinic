@@ -15,6 +15,19 @@ function getResult(arg1, arg2, result) {
   xhttp.send();
 }
 
+function getDBStatus() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+        document.getElementById("waring").innerHTML = this.responseText;
+
+    }
+  };
+  
+  xhttp.open("GET", "init?db", true);
+  xhttp.send();
+}
+
 function getTable(firstName, tableId) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {

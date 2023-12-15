@@ -35,6 +35,16 @@ public class Database {
         
     }
     
+    public boolean DBStatus(){
+        try{
+            return con.isValid(3);
+        }
+        catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        }
+        return false;
+    }
+    
     public void connectToDB(){
         try{
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/lab", "app", "app");

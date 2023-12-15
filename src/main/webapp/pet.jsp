@@ -8,7 +8,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<body onload="getPetTable('searchId','pets');">
+<body onload="getPetTable('searchId','pets');getDBStatus(); ">
+
+<div id="waring"></div>
 
 <div class="container">
     <div class="row">

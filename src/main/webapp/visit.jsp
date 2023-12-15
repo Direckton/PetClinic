@@ -6,8 +6,9 @@
   <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-    <body onload="getVisitTable('visits');">
+    <body onload="getVisitTable('visits'); getDBStatus();">
 
+    <div id="waring"></div>
 
       <div class="container">
         <div class="row">
